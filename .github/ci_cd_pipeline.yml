@@ -1,0 +1,63 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-client:
+    runs-on: self-hosted
+    needs: start-server # Ensure the server is started before this job runs
+    steps:
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-cms-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-client-
+
+      - name: Install npm dependencies
+        run: |
+          npm ci --legacy-peer-deps
+
+      - name: Cache Next.js build artifacts
+        uses: actions/cache@v4
+        with:
+          # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Build Application
+        run: |
+          rm -rf .next  # Clean up previous build artifacts
+          npm run build  # Build the client application
+          pm2 restart "cms" || pm2 start npm --name "cms" -- start
+          pm2 save
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          ANALYZE: ${{ secrets.ANALYZE }}
+
+  deploy:
+    runs-on: self-hosted
+    needs: build-client # Wait for the client to build before deploying
+    steps:
+      - name: Deploy Build and Restart Services
+        run: |
+          # Build the application in a temporary directory to minimize downtime
+          sudo mkdir -p /var/www/cms_temp
+          sudo cp -r ~/actions-runner/_work/500kalima/500kalima/.next /var/www/next_temp/
+          sudo rm -rf /var/www/.next
+          # Replace the old version with the new version
+          sudo mv /var/www/cms_temp/.next /var/www/.next
+          # Remove temp directory
+          sudo rm -rf /var/www/cms_temp
+          sudo systemctl reload nginx
+          sudo systemctl restart nginx

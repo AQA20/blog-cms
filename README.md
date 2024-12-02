@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 500kalima CMS Dashboard
 
-## Getting Started
+This project is a CMS dashboard for **500kalima.com**, built using **Next.js** and **TypeScript**. The dashboard is currently accessible only by admins, but we will provide an example URL (e.g., [test.500kalima.com](https://test.500kalima.com)) where you can test the CMS dashboard on a dummy blog.
 
-First, run the development server:
+## Prerequisites
+
+Before you start using the CMS dashboard, ensure the following:
+
+1. **500kalima API server** must be up and running. This is crucial for the CMS to function correctly.
+2. Clone and set up the API server by following the instructions in the [500kalima API repository](https://github.com/AQA20/500kalima).
+
+## Setup Guide
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/AQA20/500kalima-cms.git
+cd 500kalima-cms
+```
+
+### 2. Install dependencies
+
+Run the following command to install the necessary dependencies:
+
+```bash
+npm install
+```
+
+**Important:**
+
+Due to the use of Next.js 15 and React 19, you may encounter peer dependency conflicts. If this happens, you may need to use the `--legacy-peer-deps` or `--force` flags to bypass version checks and proceed with the installation.
+
+```bash
+npm install --legacy-peer-deps
+```
+
+or
+
+```bash
+npm install --force
+```
+
+These flags should be used with caution. It's highly recommended to update your dependency versions as much as possible to ensure long-term stability.
+
+### 3. Set up environment variables
+
+Create a `.env` file at the root of the project, and configure the required environment variables.
+
+Please check the `example.env` file to find all the required
+
+environment variables. You'll need to configure the `API_URL` to point to your running 500kalima API server.
+
+Example `.env` file:
+
+```bash
+API_URL=https://api.500kalima.com
+```
+
+Make sure to replace the API_URL with your actual API server URL.
+
+### 4. Run the CMS dashboard
+
+To run the development server with Turbopack, use the following command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start the CMS dashboard on http://localhost:3000 by default.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Accessing the CMS Dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To access the CMS dashboard, you will need admin credentials. If you want to test the dashboard on a dummy blog, we will provide login details and a test URL (e.g., test.500kalima.com) shortly.
 
-## Learn More
+## Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+Here are the available scripts for different tasks:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`dev`: Runs the development server with Turbopack.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+`build`: Builds the application for production.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`start`: Starts the production server.
+
+```bash
+npm run start
+```
+
+`lint`: Runs the ESLint checks on the code.
+
+```bash
+npm run lint
+```
+
+`fix`: Runs Prettier to format the code.
+
+```bash
+npm run fix
+```
+
+`e2e`: Runs the Playwright end-to-end tests.
+
+```bash
+npm run e2e
+```
+
+`test`: Runs the unit tests using Vitest.
+
+```bash
+npm run test
+```
+
+`coverage`: Runs tests with coverage reporting.
+
+```bash
+npm run coverage
+```
+
+## Contributing
+
+Feel free to contribute to this project by submitting issues and pull requests. To get started, fork the repository and create a branch for your changes.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

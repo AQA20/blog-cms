@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2023",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -18,10 +18,29 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
+    "types": ["vitest/globals", "vitest", "vitest/jsdom"],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/types/*": ["app/types/*"],
+      "@/store/*": ["app/store/*"],
+      "@/store": ["app/store"],
+      "@/slices/*": ["app/store/slices/*"],
+      "@/services/*": ["services/*"],
+      "@/providers/*": ["providers/*"],
+      "@/envConfig": ["envConfig.ts"],
+      "@/fixtures": ["tests/fixtures/loginFixure.ts"],
+      "@/setup": ["tests/setup.tsx"],
+      "@/mocks/*": ["tests/__mocks__/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "vitest.config.mts",
+    "test.ts"
+  ],
   "exclude": ["node_modules"]
 }

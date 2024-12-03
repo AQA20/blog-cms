@@ -8,8 +8,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 // Fetch user data
 async function fetchUser(request: NextRequest) {
   const response = await fetch(`${API_URL}/profile`, {
-    headers: { cookie: request.headers.get('cookie') || '' }, // Forward cookies from the request
-    credentials: 'include', // Include cookies for session
+    headers: {
+      'Content-Type': 'application/json', // Adding Content-Type header for clarity
+      cookie: request.headers.get('cookie') || '', // Include the cookies from the incoming request
+    },
+    credentials: 'include', // Ensure cookies are sent and accepted from the server
   });
   if (!response.ok) throw new Error('Failed to fetch user');
   return response.json();
@@ -17,10 +20,14 @@ async function fetchUser(request: NextRequest) {
 
 // Refresh the token
 async function refreshToken(request: NextRequest) {
+  // Fetching the refresh token
   const response = await fetch(`${API_URL}/token/refresh`, {
     method: 'POST',
-    headers: { cookie: request.headers.get('cookie') || '' },
-    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json', // Adding Content-Type header for clarity
+      cookie: request.headers.get('cookie') || '', // Include the cookies from the incoming request
+    },
+    credentials: 'include', // Ensure cookies are sent and accepted from the server
   });
   if (!response.ok) throw new Error('Failed to refresh token');
   return response.json();

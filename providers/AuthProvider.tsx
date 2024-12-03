@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/app/store/slices/userSlice';
 import { User } from '@/types/User';
 import { REVALIDATE_TOKEN_INTERVAL } from '@/lib/constants';
-import { Loader2 } from 'lucide-react';
 import { LoadingIndicator } from '@/components/LoadingIndicator/LoadingIndicator';
 
 const PUBLIC_ROUTES = ['/'];
@@ -19,13 +18,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
 
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
-  const isLoginPage = pathname === '/';
 
   const handleAuthSuccess = (userData: User) => {
     dispatch(setUser(userData));
   };
 
-  const { isLoading, data: user } = useQuery<User, Error>({
+  const { isLoading } = useQuery<User, Error>({
     queryKey: ['check-auth'],
     queryFn: async () => {
       try {
@@ -34,16 +32,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return user;
       } catch (error) {
         try {
-          console.log('trying to refresh token');
           const refreshedUser = await refreshToken();
           handleAuthSuccess(refreshedUser);
-          console.log('Token has been refreshed successfully');
           return refreshedUser;
         } catch {
           if (!isPublicRoute) {
             router.replace('/');
           }
-          console.log('refresh failed');
           dispatch(setUser(null));
           throw error;
         }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { type Editor } from '@tiptap/react';
 import {
   Bold,
@@ -40,7 +40,7 @@ export const Toolbar = ({ editor }: Props) => {
       placeholder: 'Add a valid URL',
       title: 'Add a Link',
       description: 'Provide a valid URL',
-      onConfirm: () => setLink(input.value),
+      handleConfirm: setLink,
     });
   };
 
@@ -50,7 +50,7 @@ export const Toolbar = ({ editor }: Props) => {
       title: 'Add Alt Text to Your Image',
       description:
         'Provide a brief description of your image to improve accessibility and SEO.',
-      onConfirm: () => imageInputRef.current?.click(),
+      handleConfirm: () => imageInputRef.current?.click(),
     });
   };
 
@@ -59,7 +59,20 @@ export const Toolbar = ({ editor }: Props) => {
       placeholder: 'YouTube video source link',
       title: 'Add YouTube Video',
       description: 'Enter a valid YouTube video URL',
-      onConfirm: () => setYoutubeVideo(input.value),
+      handleConfirm: setYoutubeVideo,
+    });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInput((prev) => ({
+      ...prev,
+      value: newValue, // Update the input's value dynamically
+    }));
+    // Update dialog onConfirm function with the nextValue
+    setDialog({
+      ...dialog,
+      onConfirm: () => dialog.onConfirm(newValue),
     });
   };
 
@@ -87,13 +100,7 @@ export const Toolbar = ({ editor }: Props) => {
           type="text"
           placeholder={input.placeholder}
           value={input.value}
-          onChange={(e) => {
-            const newValue = e.target.value;
-            setInput((prev) => ({
-              ...prev,
-              value: newValue, // Update the input's value dynamically
-            }));
-          }}
+          onChange={handleInputChange}
         />
       </AppAlertDialog>
       <Toggle

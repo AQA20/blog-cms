@@ -6,7 +6,7 @@ interface InputDialogHandler {
   title: string;
   description: string;
   dismiss?: boolean;
-  onConfirm: () => void;
+  handleConfirm: (value: string) => void;
 }
 
 interface DialogState {
@@ -43,7 +43,7 @@ export const useInputDialog = (): UseInputDialogReturn => {
   }>({
     placeholder: '',
     value: '',
-    onChange: (value) => null,
+    onChange: (value) => {},
   });
   const [dialog, setDialog] = useDialog();
   const handler = ({
@@ -51,7 +51,7 @@ export const useInputDialog = (): UseInputDialogReturn => {
     title,
     description,
     dismiss = true,
-    onConfirm,
+    handleConfirm,
   }: InputDialogHandler) => {
     //Set input placeholder
     setInput((prev) => ({ ...prev, placeholder }));
@@ -60,7 +60,9 @@ export const useInputDialog = (): UseInputDialogReturn => {
       title,
       description,
       dismiss,
-      onConfirm,
+      onConfirm: (value: string) => {
+        handleConfirm(value);
+      },
     });
     // Reset input value
     setInput((prev) => ({ ...prev, value: '' }));

@@ -5,7 +5,7 @@ export const useDialog = () => {
     open: boolean;
     title: string;
     description: string;
-    onConfirm: (...args: unknown[]) => unknown; // Accepts any function
+    onConfirm: (...args: any[]) => void; // Accepts any function
     dismiss?: boolean;
   }>({
     open: false,

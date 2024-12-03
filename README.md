@@ -48,12 +48,12 @@ Create a `.env` file at the root of the project, and configure the required envi
 
 Please check the `example.env` file to find all the required
 
-environment variables. You'll need to configure the `API_URL` to point to your running 500kalima API server.
+environment variables. You'll need to configure the `NEXT_PUBLIC_API_URL` to point to your running 500kalima API server.
 
 Example `.env` file:
 
 ```bash
-API_URL=https://api.500kalima.com
+NEXT_PUBLIC_API_URL=https://500kalima.com/api
 ```
 
 Make sure to replace the API_URL with your actual API server URL.

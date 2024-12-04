@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import TiptapEditor from '@/components/Editor/TipTap/TiptapEditor';
 import { z } from 'zod';
 import { X } from 'lucide-react';
@@ -172,7 +172,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                   <Textarea
                     dir="rtl"
                     placeholder="وصف المقال"
-                    className="h-[80px] resize-none"
+                    className="h-[140px] resize-none md:h-[80px]"
                     {...field}
                   />
                 </FormControl>
@@ -180,7 +180,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
               </FormItem>
             )}
           />
-          <div className="flex w-full space-x-2">
+          <div className="block w-full space-x-2 md:flex">
             <FormField
               control={form.control}
               name="tags"
@@ -204,19 +204,21 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                         className="text-right"
                       />
                       {/* Render badges */}
-                      {tags.map((tag) => (
-                        <BadgeComponent
-                          key={tag}
-                          name={tag}
-                          className="rounded-md px-2 py-1"
-                        >
-                          <X
-                            className="cursor-pointer"
-                            size={14}
-                            onClick={() => handleRemoveTag(tag)}
-                          />
-                        </BadgeComponent>
-                      ))}
+                      <div className="flex w-full flex-wrap gap-2">
+                        {tags.map((tag) => (
+                          <BadgeComponent
+                            key={tag}
+                            name={tag}
+                            className="rounded-md px-2 py-1"
+                          >
+                            <X
+                              className="cursor-pointer"
+                              size={14}
+                              onClick={() => handleRemoveTag(tag)}
+                            />
+                          </BadgeComponent>
+                        ))}
+                      </div>
                     </div>
                   </FormControl>
                   <FormMessage />

@@ -1,11 +1,8 @@
 import axios from 'axios';
-import envConfig from '@/envConfig';
-
-const { API_URL } = envConfig;
 
 // Create Axios instance with default base URL
 const apiClient = axios.create({
-  baseURL: API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
 });
 

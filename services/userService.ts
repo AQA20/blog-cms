@@ -1,5 +1,5 @@
 import { User, UserRawData } from '@/types/User';
-import apiClient from '@/services/api';
+import apiClient from '@/services/apiClient';
 import { handleAsyncError } from '@/lib/utils';
 
 const normalizeUserData = (rawData: UserRawData): User => {

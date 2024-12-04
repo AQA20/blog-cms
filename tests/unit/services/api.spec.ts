@@ -1,4 +1,4 @@
-import apiClient from '@/services/api';
+import apiClient from '@/services/apiClient';
 import { it, describe, expect } from 'vitest';
 import envConfig from '@/envConfig';
 

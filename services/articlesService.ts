@@ -1,7 +1,7 @@
 import { Article, RawArticle, RawSingleArticle } from '@/types/Article';
 import { ArticleStatus } from '@/types/ArticleStatus';
 import { PaginatedArticles } from '@/types/PaginatedArticles';
-import apiClient from '@/services/api';
+import apiClient from '@/services/apiClient';
 import { handleAsyncError } from '@/lib/utils';
 import { FIRST_PAGE } from '@/lib/constants';
 import { ArticleFormData, EditArticleFormData } from '@/types/ArticleFormData';

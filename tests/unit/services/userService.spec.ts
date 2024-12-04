@@ -1,10 +1,10 @@
 import { describe, it, expect, type Mock } from 'vitest';
-import apiClient from '@/services/api';
+import apiClient from '@/services/apiClient';
 import { loginUser } from '@/services/userService';
 import { User, UserRawData } from '@/types/User';
 
 // Mock apiClient to isolate test behavior
-vi.mock('@/services/api', () => ({
+vi.mock('@/services/apiClient', () => ({
   // default because apiClient is export as default
   default: {
     post: vi.fn(),

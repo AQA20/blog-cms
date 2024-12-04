@@ -18,6 +18,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
 
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+  const isLoginPage = pathname === '/';
 
   const handleAuthSuccess = (userData: User) => {
     dispatch(setUser(userData));
@@ -45,10 +46,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     },
     retry: false, // failed queries will not retry by default
-    gcTime: 0, // Prevent caching
-    staleTime: 0, // Ensure fresh data on each fetch
+    refetchOnWindowFocus: false,
     refetchInterval: REVALIDATE_TOKEN_INTERVAL,
-    refetchIntervalInBackground: true,
+    enabled: !isLoginPage,
   });
 
   // Always render public routes immediately

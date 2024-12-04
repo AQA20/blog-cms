@@ -19,6 +19,7 @@ export default function ArticlesTable() {
     useQuery<PaginatedArticles>({
       queryKey: ['articles'],
       queryFn: async () => await fetchArticles(status, page),
+      refetchOnWindowFocus: false,
     });
 
   useEffect(() => {

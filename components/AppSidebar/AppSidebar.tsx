@@ -37,7 +37,7 @@ const AppSidebar: React.FC<Props> = ({ items, username, email, onLogout }) => {
     return url === pathname ? 'bg-secondary' : '';
   };
 
-  if (!resolvedTheme) return <LoadingIndicator />;
+  if (!resolvedTheme) return null;
 
   return (
     <Sidebar collapsible="icon">

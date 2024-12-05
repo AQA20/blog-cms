@@ -131,15 +131,18 @@ const createArticleTags = handleAsyncError(
 );
 
 const uploadArticleImage = handleAsyncError(
-  async (articleId: number, file: File, capture: string | null = null) => {
+  async (articleId: number, file: File, capture?: string) => {
     const formData = new FormData();
     formData.append('file', file);
+    let url: string;
+    if (capture) {
+      url = `/image/${articleId}?type=ARTICLE&capture=${capture}`;
+    } else {
+      url = `/image/${articleId}?type=ARTICLE`;
+    }
     const {
       data: { data },
-    } = await apiClient.post(
-      `/image/${articleId}?type=ARTICLE&capture=${capture}`,
-      formData,
-    );
+    } = await apiClient.post(url, formData);
     return data;
   },
 );
@@ -154,7 +157,10 @@ const setArticleFeaturedImg = handleAsyncError(
 );
 
 export const createArticle = handleAsyncError(
-  async (formData: ArticleFormData): Promise<RawArticle> => {
+  async (
+    formData: ArticleFormData,
+    thumbnail: File | undefined,
+  ): Promise<RawArticle> => {
     const categoryId = await createCategory(formData.category);
     const articleData = {
       title: formData.title,
@@ -168,10 +174,10 @@ export const createArticle = handleAsyncError(
 
     await createArticleTags(formData.tags, article.id);
 
-    if (formData.thumbnail) {
+    if (thumbnail) {
       const featuredImg = await uploadArticleImage(
         article.id,
-        formData.thumbnail,
+        thumbnail,
         formData.title,
       );
       await setArticleFeaturedImg(article.id, featuredImg.id);
@@ -181,19 +187,24 @@ export const createArticle = handleAsyncError(
   },
 );
 
+interface UpdateOptions {
+  articleId: number;
+  thumbnailId: number;
+  thumbnail: File | undefined;
+}
+
 export const updateArticle = handleAsyncError(
   async (
     formData: ArticleFormData,
-    articleId: number,
-    thumbnailId: number,
+    options: UpdateOptions,
   ): Promise<RawArticle> => {
     // Set thumbnailIdValue to previous id
-    let thumbnailIdValue = thumbnailId;
+    let thumbnailIdValue = options.thumbnailId;
     // Unless new image was uploaded
-    if (formData.thumbnail) {
+    if (options.thumbnail) {
       const featuredImg = await uploadArticleImage(
-        articleId,
-        formData.thumbnail,
+        options.articleId,
+        options.thumbnail,
       );
       // Assign the new uploaded featuredImg id as the thumbnailId
       thumbnailIdValue = featuredImg.id;
@@ -212,7 +223,7 @@ export const updateArticle = handleAsyncError(
     };
     const {
       data: { data: article },
-    } = await apiClient.put(`/article/${articleId}`, articleData);
+    } = await apiClient.put(`/article/${options.articleId}`, articleData);
 
     return article;
   },

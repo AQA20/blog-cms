@@ -50,7 +50,7 @@ const Navbar = () => {
     }
     return (
       <Button onClick={() => router.push('/dashboard/article/new')}>
-        <Plus /> Create Article
+        <Plus /> {!isMobile && 'Create Article'}
       </Button>
     );
   };

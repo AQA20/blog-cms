@@ -7,6 +7,7 @@ const seconds = 60;
 const ms = 1000;
 export const REVALIDATE_TOKEN_INTERVAL = minutes * seconds * ms; // time in ms
 export const FIRST_PAGE = 1;
+export const MAX_TAGS = 5;
 
 export const DEFAULT_TITLES = {
   success: 'Successful!',

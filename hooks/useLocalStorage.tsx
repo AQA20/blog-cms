@@ -3,7 +3,7 @@ import { useState } from 'react';
 const useLocalStorage = <T,>(
   key: string,
   initialValue: T,
-): [T, (value: T | ((prev: T) => T)) => void] => {
+): [T, (value: T | ((prev: T) => T)) => void, () => void] => {
   // Lazy initialization
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
@@ -27,7 +27,11 @@ const useLocalStorage = <T,>(
     }
   };
 
-  return [storedValue, setValue] as const;
+  const removeValue = () => {
+    localStorage.removeItem(key);
+  };
+
+  return [storedValue, setValue, removeValue] as const;
 };
 
 export default useLocalStorage;

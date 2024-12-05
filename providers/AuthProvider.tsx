@@ -47,6 +47,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     },
     retry: false, // failed queries will not retry by default
     refetchOnWindowFocus: false,
+    refetchIntervalInBackground: true,
     refetchInterval: REVALIDATE_TOKEN_INTERVAL,
     enabled: !isLoginPage,
   });

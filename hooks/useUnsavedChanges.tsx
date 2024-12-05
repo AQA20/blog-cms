@@ -1,13 +1,27 @@
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { z, type ZodType } from 'zod';
 
-export const useUnsavedChanges = <T extends Record<string, unknown>>(
-  form: UseFormReturn<T>,
+export const useUnsavedChanges = <T extends ZodType<any, any, any>>(
+  form: UseFormReturn<z.infer<T>>,
   edit: boolean,
 ) => {
   const router = useRouter();
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [_, setLocalStorageValue] = useLocalStorage('formData', {});
+
+  const saveFormDataToLocalStorage = useCallback((data: z.infer<T>) => {
+    const formData = data;
+    // Use a regular expression to find and remove base64 images in the content
+    formData.content = formData.content.replace(
+      /<img[^>]+src="data:image\/[^;]+;base64[^"]+"[^>]*>/g,
+      '',
+    );
+    delete formData.thumbnail;
+    setLocalStorageValue(formData);
+  }, []);
 
   // Watch for form changes
   useEffect(() => {
@@ -20,7 +34,7 @@ export const useUnsavedChanges = <T extends Record<string, unknown>>(
         }
         return val !== undefined;
       });
-
+      saveFormDataToLocalStorage(value);
       setHasUnsavedChanges(hasValues);
     });
 

@@ -24,15 +24,17 @@ const TiptapEditor = ({
     editorProps: {
       attributes: {
         class:
-          'rounded-md border border-input focus:border-input p-3 min-h-[200px] list-disc pl-5 space-y-2',
+          'rounded-md border border-input focus:border-input border-border p-3 min-h-[200px] space-y-2 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
       },
       handlePaste: (view, event) => {
         // Get the clipboard data
         const clipboardData = event.clipboardData;
-        const pastedText = clipboardData?.getData('text');
+        let pastedText = clipboardData?.getData('text');
 
         // Insert the plain text content into the editor
         if (pastedText) {
+          // Remove extra new lines (replace multiple new lines with a single new line)
+          pastedText = pastedText.replace(/\n\s*\n+/g, '\n');
           editor?.commands.insertContent(pastedText);
         }
 

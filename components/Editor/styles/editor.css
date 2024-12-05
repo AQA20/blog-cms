@@ -12,10 +12,7 @@
 
 .tiptap img,
 .tiptap iframe {
-  border-radius: 1rem;
-  margin: 1rem 0 1rem 0;
-  max-width: 100%;
-  @apply h-[229px] w-[406px] md:w-[680px] md:h-[510px];
+  @apply my-4 h-[229px] w-[406px] max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
 }
 
 .tiptap p.is-editor-empty:first-child::before {

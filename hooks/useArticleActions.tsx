@@ -88,7 +88,7 @@ export const useArticleActions = (articleId: number) => {
       open: true,
       title: 'Are you sure you want to remove the article?',
       description:
-        'Article will be removed and status will be updated to Pending',
+        'Article will be removed and status will be updated to Trashed',
       onConfirm: () => deleteMutate(articleId),
     });
   };

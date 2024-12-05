@@ -3,7 +3,6 @@ export interface ArticleFormData {
   description: string;
   category: string;
   tags: string[];
-  thumbnail?: File;
   content: string;
 }
 

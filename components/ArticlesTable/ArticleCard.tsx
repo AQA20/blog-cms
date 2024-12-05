@@ -37,10 +37,7 @@ const ArticleCard: React.FC<Props> = ({
         </figure>
         <section className="relative">
           <header>
-            <h3
-              onClick={onClick}
-              className="text-onSurface mb-1 line-clamp-2 text-title-s"
-            >
+            <h3 className="text-onSurface mb-1 line-clamp-2 text-title-s">
               {title}
             </h3>
           </header>

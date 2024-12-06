@@ -8,8 +8,6 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
-  type Cell,
-  type Row,
 } from '@tanstack/react-table';
 
 import {
@@ -21,9 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import ArticleCard from './ArticleCard';
 import { Article } from '@/types/Article';
-import { Badges } from '@/components/Badges/Badges';
 import { Button } from '@/components/ui/button';
 import { FIRST_PAGE } from '@/lib/constants';
 
@@ -35,44 +31,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   onNextPage: () => void;
   onPreviousPage: () => void;
 }
-
-const renderCell = (cell: Cell<Article, unknown>, row: Row<Article>) => {
-  const tags = row.original.tags;
-  switch (cell.column.id) {
-    case 'title':
-      return (
-        <div className="w-full sm:max-w-sm">
-          <ArticleCard
-            imgUrl={row.original.featuredImg}
-            title={row.original.title}
-            description={row.original.description}
-            itemId={row.original.id}
-            onClick={() =>
-              window.open(
-                `${process.env.NEXT_PUBLIC_WEB_URL}/${row.original.slug}`,
-                '__blank',
-              )
-            }
-          />
-        </div>
-      );
-    case 'tags':
-      return (
-        <div className="flex w-full min-w-max space-x-2 sm:max-w-sm">
-          <Badges badges={tags} maxBadgesToShow={3} />
-        </div>
-      );
-    case 'category':
-      return (
-        <div className="min-w-max text-nowrap">
-          {row.original.category.name}
-        </div>
-      );
-
-    default:
-      return flexRender(cell.column.columnDef.cell, cell.getContext());
-  }
-};
 
 export const DataTable: React.FC<Props> = ({
   columns,
@@ -119,7 +77,12 @@ export const DataTable: React.FC<Props> = ({
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{renderCell(cell, row)}</TableCell>
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))

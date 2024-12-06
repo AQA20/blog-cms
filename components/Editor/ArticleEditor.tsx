@@ -145,7 +145,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
   /** Handle keyboard input for tags */
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.code === 'Period') {
+      if (e.code === 'Comma' || e.key === ',') {
         e.preventDefault();
         addTag();
       }
@@ -199,7 +199,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
             )}
           />
           {/* Tags and Category */}
-          <div className="block w-full space-x-2 md:flex">
+          <div className="block w-full sm:space-x-2 md:flex">
             <FormField
               control={form.control}
               name="tags"
@@ -214,7 +214,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                       <Input
                         type="text"
                         disabled={tags.length >= MAX_TAGS}
-                        placeholder="اكتب هاشتاغ واضغط نقطة"
+                        placeholder="Type a tag and press comma to add it"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyDown}

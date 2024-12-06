@@ -85,33 +85,6 @@ export const useUnsavedChanges = <T extends ZodType<any, any, any>>(
     document.addEventListener('click', handleLinkClick, true);
     return () => document.removeEventListener('click', handleLinkClick, true);
   }, [edit, hasUnsavedChanges, router]);
-
-  // Handle browser back button
-  useEffect(() => {
-    // Add popstate event listener for browser back button
-    const handlePopState = (e: PopStateEvent) => {
-      if (hasUnsavedChanges) {
-        const confirm = window.confirm(
-          'You have unsaved changes. Are you sure you want to leave?',
-        );
-
-        if (!confirm) {
-          // Push a new entry to prevent navigation
-          window.history.pushState(null, '', window.location.href);
-        }
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    // Push initial state to enable popstate handling
-    window.history.pushState(null, '', window.location.href);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [hasUnsavedChanges]);
 };
 
 export default useUnsavedChanges;

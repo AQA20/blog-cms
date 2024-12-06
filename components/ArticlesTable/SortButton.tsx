@@ -5,7 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchArticles } from '@/services/articlesService';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { setArticles } from '@/app/store/slices/ArticlesSlice';
+import {
+  setArticles,
+  setError,
+  setLoading,
+} from '@/app/store/slices/ArticlesSlice';
 
 export const SortButton = ({
   title,
@@ -18,31 +22,42 @@ export const SortButton = ({
   const { status } = useSelect((state) => state.articleStatus);
   const { page } = useSelect((state) => state.articles);
   const [isDesc, setIsDesc] = useState(true);
-  const { data, refetch, isSuccess } = useQuery<PaginatedArticles>({
+  const { data, refetch } = useQuery<PaginatedArticles>({
     queryKey: ['sortedArticles'],
-    queryFn: async () =>
-      await fetchArticles(status, page, {
-        orderBy,
-        order: isDesc ? 'DESC' : 'ASC',
-      }),
+    queryFn: async () => {
+      try {
+        dispatch(setLoading(true));
+        return await fetchArticles(status, page, {
+          orderBy,
+          order: isDesc ? 'DESC' : 'ASC',
+        });
+      } catch (error) {
+        const err = error as Error;
+        dispatch(setError(err.message));
+        throw err;
+      } finally {
+        dispatch(setLoading(false));
+      }
+    },
     enabled: false,
   });
 
-  useEffect(() => {
+  const handleSorting = () => {
+    setIsDesc(!isDesc);
     refetch();
-  }, [isDesc, refetch, orderBy]);
+  };
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (data) {
       dispatch(setArticles(data));
     }
-  }, [isSuccess, data, dispatch]);
+  }, [data, dispatch]);
 
   return (
     <Button
       variant="ghost"
       className="hover:bg-secondary hover:text-secondary-foreground"
-      onClick={() => setIsDesc(!isDesc)}
+      onClick={handleSorting}
     >
       {title}
       <ArrowUpDown />

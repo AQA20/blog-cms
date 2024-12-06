@@ -5,4 +5,6 @@ export interface PaginatedArticles {
   page: number;
   totalPages: number;
   hasNextPage: boolean;
+  error?: string;
+  loading?: boolean;
 }

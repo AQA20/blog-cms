@@ -8,11 +8,18 @@ import { fetchArticles } from '@/services/articlesService';
 import { PaginatedArticles } from '@/types/PaginatedArticles';
 import { setPage, setArticles } from '@/app/store/slices/ArticlesSlice';
 import { FIRST_PAGE } from '@/lib/constants';
+import { LoadingIndicator } from '../LoadingIndicator/LoadingIndicator';
 import { useAppStore } from '@/hooks/useAppStore';
 
 export default function ArticlesTable() {
   const { dispatch, useSelect } = useAppStore();
-  const { page, hasNextPage, articles } = useSelect((state) => state.articles);
+  const {
+    page,
+    hasNextPage,
+    articles,
+    loading,
+    error: articlesError,
+  } = useSelect((state) => state.articles);
   const { status } = useSelect((state) => state.articleStatus);
 
   const { isPending, error, data, refetch, isSuccess } =
@@ -39,11 +46,11 @@ export default function ArticlesTable() {
     refetch();
   }, [page, refetch]);
 
-  if (isPending) {
-    return <p>loading...</p>;
-  } else if (error) {
+  if (isPending || loading) {
+    return <LoadingIndicator />;
+  } else if (error || articlesError) {
     return (
-      <p className="text-error">{`An error has occurred: ${error.message}`}</p>
+      <p className="text-destructive">{`An error has occurred: ${error ? error.message : articlesError}`}</p>
     );
   }
   return (

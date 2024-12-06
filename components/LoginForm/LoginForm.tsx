@@ -112,7 +112,7 @@ export function LoginForm() {
           )}
         />
         {mutation.isError && (
-          <div className="text-red-600">
+          <div className="text-destructive">
             An error occurred: {mutation.error.message}
           </div>
         )}

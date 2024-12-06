@@ -8,6 +8,8 @@ const initialState: PaginatedArticles = {
   totalPages: 1,
   page: FIRST_PAGE,
   hasNextPage: false,
+  error: '',
+  loading: false,
 };
 
 // Create the slice
@@ -24,9 +26,16 @@ const articlesSlice = createSlice({
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
   },
 });
 
 // Export actions and reducer
-export const { setArticles, setPage } = articlesSlice.actions;
+export const { setArticles, setPage, setLoading, setError } =
+  articlesSlice.actions;
 export default articlesSlice.reducer;

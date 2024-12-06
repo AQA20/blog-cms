@@ -28,7 +28,7 @@ export const columns: ColumnDef<Article>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: () => <SortButton orderBy="createdAt" title="Date"  key="Date" />,
+    header: () => <SortButton orderBy="createdAt" title="Date" key="Date" />,
   },
   {
     accessorKey: 'author',

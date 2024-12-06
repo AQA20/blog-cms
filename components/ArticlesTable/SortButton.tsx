@@ -1,6 +1,6 @@
 import { PaginatedArticles } from '@/types/PaginatedArticles';
 import { useAppStore } from '@/hooks/useAppStore';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchArticles } from '@/services/articlesService';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ import {
   setArticles,
   setError,
   setLoading,
+  setOrder,
 } from '@/app/store/slices/ArticlesSlice';
 
 export const SortButton = ({
@@ -20,8 +21,8 @@ export const SortButton = ({
 }) => {
   const { dispatch, useSelect } = useAppStore();
   const { status } = useSelect((state) => state.articleStatus);
-  const { page } = useSelect((state) => state.articles);
-  const [isDesc, setIsDesc] = useState(true);
+  const { page, order } = useSelect((state) => state.articles);
+  // const [order, setOrder] = useState<'DESC' | 'ASC'>('DESC');
   const { data, refetch } = useQuery<PaginatedArticles>({
     queryKey: ['sortedArticles'],
     queryFn: async () => {
@@ -29,7 +30,7 @@ export const SortButton = ({
         dispatch(setLoading(true));
         return await fetchArticles(status, page, {
           orderBy,
-          order: isDesc ? 'DESC' : 'ASC',
+          order,
         });
       } catch (error) {
         const err = error as Error;
@@ -43,7 +44,7 @@ export const SortButton = ({
   });
 
   const handleSorting = () => {
-    setIsDesc(!isDesc);
+    dispatch(setOrder(order === 'DESC' ? 'ASC' : 'DESC'));
     refetch();
   };
 

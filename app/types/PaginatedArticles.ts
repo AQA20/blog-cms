@@ -7,4 +7,5 @@ export interface PaginatedArticles {
   hasNextPage: boolean;
   error?: string;
   loading?: boolean;
+  order?: 'DESC' | 'ASC';
 }

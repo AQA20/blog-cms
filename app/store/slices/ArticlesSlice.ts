@@ -10,6 +10,7 @@ const initialState: PaginatedArticles = {
   hasNextPage: false,
   error: '',
   loading: false,
+  order: 'DESC',
 };
 
 // Create the slice
@@ -32,10 +33,13 @@ const articlesSlice = createSlice({
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
+    setOrder: (state, action: PayloadAction<'DESC' | 'ASC'>) => {
+      state.order = action.payload;
+    },
   },
 });
 
 // Export actions and reducer
-export const { setArticles, setPage, setLoading, setError } =
+export const { setArticles, setPage, setLoading, setError, setOrder } =
   articlesSlice.actions;
 export default articlesSlice.reducer;

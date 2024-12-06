@@ -145,7 +145,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
   /** Handle keyboard input for tags */
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.code === 'Comma') {
+      if (e.code === 'Period') {
         e.preventDefault();
         addTag();
       }
@@ -214,7 +214,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                       <Input
                         type="text"
                         disabled={tags.length >= MAX_TAGS}
-                        placeholder="اكتب هاشتاغ واضغط فاصلة"
+                        placeholder="اكتب هاشتاغ واضغط نقطة"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyDown}

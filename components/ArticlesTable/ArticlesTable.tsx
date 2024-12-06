@@ -6,13 +6,13 @@ import { DataTable } from '@/components/ArticlesTable/DataTable';
 import { useQuery } from '@tanstack/react-query';
 import { fetchArticles } from '@/services/articlesService';
 import { PaginatedArticles } from '@/types/PaginatedArticles';
-import { setArticles, setPage } from '@/app/store/slices/ArticlesSlice';
+import { setPage, setArticles } from '@/app/store/slices/ArticlesSlice';
 import { FIRST_PAGE } from '@/lib/constants';
 import { useAppStore } from '@/hooks/useAppStore';
 
 export default function ArticlesTable() {
   const { dispatch, useSelect } = useAppStore();
-  const { page, hasNextPage } = useSelect((state) => state.articles);
+  const { page, hasNextPage, articles } = useSelect((state) => state.articles);
   const { status } = useSelect((state) => state.articleStatus);
 
   const { isPending, error, data, refetch, isSuccess } =
@@ -49,7 +49,7 @@ export default function ArticlesTable() {
   return (
     <DataTable
       columns={columns}
-      data={data.articles}
+      data={articles}
       page={page}
       hasNextPage={hasNextPage}
       onNextPage={() => dispatch(setPage(page + 1))}

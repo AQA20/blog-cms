@@ -1,6 +1,7 @@
 import { Article, RawArticle, RawSingleArticle } from '@/types/Article';
 import { ArticleStatus } from '@/types/ArticleStatus';
 import { PaginatedArticles } from '@/types/PaginatedArticles';
+import { FetchArticleOptions } from '@/app/types/FetchArticles';
 import apiClient from '@/services/apiClient';
 import { handleAsyncError } from '@/lib/utils';
 import { FIRST_PAGE } from '@/lib/constants';
@@ -69,10 +70,18 @@ export const fetchArticles = handleAsyncError(
   async (
     status: ArticleStatus,
     page = FIRST_PAGE,
+    options: Partial<FetchArticleOptions> = {
+      orderBy: 'createdAt',
+      order: 'DESC',
+      search: '',
+    },
   ): Promise<PaginatedArticles> => {
+    const { orderBy = 'createdAt', order = 'DESC', search = '' } = options;
     const {
       data: { data },
-    } = await apiClient.get(`/articles?page=${page}&status=${status}`);
+    } = await apiClient.get(
+      `/articles?page=${page}&status=${status}&orderBy=${orderBy}&order=${order}&search=${search}`,
+    );
 
     return {
       articles: normalizeArticleData(data.articles),

@@ -19,7 +19,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarItem } from '@/types/SidebarItem';
 import { usePathname } from 'next/navigation';
 import { useThemeMode } from '@/hooks/useThemeMode';
-import { LoadingIndicator } from '@/components/LoadingIndicator/LoadingIndicator';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   items: SidebarItem[];

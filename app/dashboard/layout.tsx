@@ -49,7 +49,7 @@ const DashboardLayout = ({
       <main className="w-full">
         <FormSubmitProvider>
           <Navbar />
-          <div className="mt-12 p-2 pt-6 sm:p-4">{children}</div>
+          <div className="mt-12 p-2 pt-6 sm:p-4 sm:mt-14">{children}</div>
         </FormSubmitProvider>
       </main>
     </SidebarProvider>

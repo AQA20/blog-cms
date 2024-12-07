@@ -281,7 +281,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                 <FormControl>
                   <Input
                     type="file"
-                    className="w-fit"
+                    className="w-full sm:w-fit"
                     accept="image/*"
                     onChange={(e) =>
                       form.setValue(

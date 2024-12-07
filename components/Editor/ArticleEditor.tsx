@@ -208,7 +208,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                   <FormLabel>
                     Tags
                     <span className="text-zinc-500">
-                      (Type a tag and press period '.' to add it)
+                      (Type a tag and press period . to add it)
                     </span>
                   </FormLabel>
                   <FormControl>

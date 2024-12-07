@@ -145,7 +145,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
   /** Handle keyboard input for tags */
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.code === 'Comma' || e.key === ',') {
+      if (e.code === 'Period' && e.key === '.') {
         e.preventDefault();
         addTag();
       }
@@ -205,7 +205,12 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
               name="tags"
               render={() => (
                 <FormItem className="flex-1">
-                  <FormLabel>Tags</FormLabel>
+                  <FormLabel>
+                    Tags
+                    <span className="text-zinc-500">
+                      (Type a tag and press period '.' to add it)
+                    </span>
+                  </FormLabel>
                   <FormControl>
                     <div
                       className="flex flex-row-reverse flex-wrap items-center gap-2 rounded-md"
@@ -214,7 +219,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                       <Input
                         type="text"
                         disabled={tags.length >= MAX_TAGS}
-                        placeholder="Type a tag and press comma to add it"
+                        placeholder="اكتب هاشتاق واضغط نقطة لإضافته"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyDown}

@@ -33,8 +33,8 @@ const TiptapEditor = ({
 
         // Insert the plain text content into the editor
         if (pastedText) {
-          // Remove extra new lines (replace multiple new lines with a single new line)
-          pastedText = pastedText.replace(/\n\s*\n+/g, '\n');
+          // Remove new lines and extra spaces
+          pastedText = pastedText.replace(/\n\s*\n*/g, '\n').trim();
           editor?.commands.insertContent(pastedText);
         }
 

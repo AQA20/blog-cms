@@ -31,8 +31,11 @@ export const useUnsavedChanges = <T extends ZodType<any, any, any>>(
       const hasValues = Object.values(value).some((val) => {
         if (typeof val === 'string') {
           return val.trim().length > 0;
-        }
-        return val !== undefined;
+        } else if (Array.isArray(val)) {
+          return val.length > 0;
+        }  
+        return val instanceof File;
+        
       });
       saveFormDataToLocalStorage(value);
       setHasUnsavedChanges(hasValues);

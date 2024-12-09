@@ -67,7 +67,7 @@ const TiptapEditor = ({
       <Toolbar editor={editor} />
       <EditorContent
         dir="rtl"
-        className="mt-2 whitespace-pre-wrap"
+        className=" max-h-fit mt-2 whitespace-pre-wrap"
         editor={editor}
       />
       <div className="character-count">

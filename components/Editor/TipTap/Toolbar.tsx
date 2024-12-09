@@ -17,6 +17,7 @@ import {
   Undo,
   Redo,
   Youtube,
+  Twitter
 } from 'lucide-react';
 import { Toggle } from '@/components/ui/toggle';
 import { AppAlertDialog } from '@/components/AlertDialog/AlertDialog';
@@ -32,7 +33,7 @@ const toggleStyle = 'rounded-full';
 
 export const Toolbar = ({ editor }: Props) => {
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const { setImage, setLink, setYoutubeVideo } = useTipTapEditorSetters(editor);
+  const { setImage, setLink, setYoutubeVideo, setTweet } = useTipTapEditorSetters(editor);
   const { input, setInput, dialog, setDialog, handler } = useInputDialog();
 
   const openLinkPicker = () => {
@@ -60,6 +61,15 @@ export const Toolbar = ({ editor }: Props) => {
       title: 'Add YouTube Video',
       description: 'Enter a valid YouTube video URL',
       handleConfirm: setYoutubeVideo,
+    });
+  };
+
+  const openTwitterPicker = () => {
+    handler({
+      placeholder: 'Add any tweet id',
+      title: 'Add any tweet to your article',
+      description: 'Enter a valid tweet id',
+      handleConfirm: setTweet,
     });
   };
 
@@ -146,6 +156,14 @@ export const Toolbar = ({ editor }: Props) => {
         onPressedChange={openYoutubePicker}
       >
         <Youtube className="h-6 w-6" />
+      </Toggle>
+      <Toggle
+        size="lg"
+        className={toggleStyle}
+        pressed={editor.isActive('twitter')}
+        onPressedChange={openTwitterPicker}
+      >
+        <Twitter className="h-6 w-6" />
       </Toggle>
       <Toggle
         size="lg"

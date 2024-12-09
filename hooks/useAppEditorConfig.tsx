@@ -7,11 +7,13 @@ import TextAlign from '@tiptap/extension-text-align';
 import CharacterCount from '@tiptap/extension-character-count';
 import Youtube from '@tiptap/extension-youtube';
 import { useRef } from 'react';
+import { TweetExtension } from '@/components/Editor/TipTap/extensions/TweetExtension';
 
 export const useAppEditorConfig = () => {
   const editorConfig = useRef({
     extensions: [
       StarterKit,
+      TweetExtension,
       Placeholder.configure({
         placeholder: 'محتوى المقال هنا...',
       }),

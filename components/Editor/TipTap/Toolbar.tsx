@@ -18,6 +18,7 @@ import {
   Redo,
   Youtube,
   Twitter,
+  Facebook,
 } from 'lucide-react';
 import { Toggle } from '@/components/ui/toggle';
 import { AppAlertDialog } from '@/components/AlertDialog/AlertDialog';
@@ -33,7 +34,7 @@ const toggleStyle = 'rounded-full';
 
 export const Toolbar = ({ editor }: Props) => {
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const { setImage, setLink, setYoutubeVideo, setTweet } =
+  const { setImage, setLink, setYoutubeVideo, setTweet, setFbPost } =
     useTipTapEditorSetters(editor);
   const { input, setInput, dialog, setDialog, handler } = useInputDialog();
 
@@ -71,6 +72,15 @@ export const Toolbar = ({ editor }: Props) => {
       title: 'Add any tweet to your article',
       description: 'Enter a valid tweet id',
       handleConfirm: setTweet,
+    });
+  };
+
+  const openFbPicker = () => {
+    handler({
+      placeholder: 'Add a facebook post url',
+      title: 'Add any facebook post url to your article',
+      description: 'Enter a valid facebook url',
+      handleConfirm: setFbPost,
     });
   };
 
@@ -165,6 +175,14 @@ export const Toolbar = ({ editor }: Props) => {
         onPressedChange={openTwitterPicker}
       >
         <Twitter className="h-6 w-6" />
+      </Toggle>
+      <Toggle
+        size="lg"
+        className={toggleStyle}
+        pressed={editor.isActive('facebook')}
+        onPressedChange={openFbPicker}
+      >
+        <Facebook className="h-6 w-6" />
       </Toggle>
       <Toggle
         size="lg"

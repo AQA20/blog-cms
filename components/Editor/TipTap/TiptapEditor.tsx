@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useEditor, EditorContent, type Editor } from '@tiptap/react';
 import { Toolbar } from '@/components/Editor/TipTap/Toolbar';
 import { useAppEditorConfig } from '@/hooks/useAppEditorConfig';
+import { FacebookPostEmbed } from '@/components/Embeds/FacebookPostEmbed/FacebookPostEmbed';
 import '../styles/editor.css';
 
 const TiptapEditor = ({
@@ -64,7 +65,10 @@ const TiptapEditor = ({
     <div
       className={`tiptap flex min-h-[250px] flex-col justify-stretch ${className}`}
     >
-      <Toolbar editor={editor} />
+      <div className="block">
+        <Toolbar editor={editor} />
+      </div>
+
       <EditorContent
         dir="rtl"
         className="mt-2 max-h-fit whitespace-pre-wrap"

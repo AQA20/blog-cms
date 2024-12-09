@@ -8,12 +8,14 @@ import CharacterCount from '@tiptap/extension-character-count';
 import Youtube from '@tiptap/extension-youtube';
 import { useRef } from 'react';
 import { TweetExtension } from '@/components/Editor/TipTap/extensions/TweetExtension';
+import { FacebookExtension } from '@/components/Editor/TipTap/extensions/FacebookExtension';
 
 export const useAppEditorConfig = () => {
   const editorConfig = useRef({
     extensions: [
       StarterKit,
       TweetExtension,
+      FacebookExtension,
       Placeholder.configure({
         placeholder: 'محتوى المقال هنا...',
       }),

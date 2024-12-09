@@ -45,7 +45,6 @@ const DashboardLayout = ({
         email={user?.email || ''}
         onLogout={handleLogout}
       />
-
       <main className="w-full">
         <FormSubmitProvider>
           <Navbar />

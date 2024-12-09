@@ -6,6 +6,7 @@ interface TipTapEditorSetters {
   setLink: (url: string) => void;
   setYoutubeVideo: (src: string) => void;
   setTweet: (tweetId: string) => void;
+  setFbPost: (postUrl: string) => void;
 }
 
 export const useTipTapEditorSetters = (
@@ -89,5 +90,20 @@ export const useTipTapEditorSetters = (
     [editor],
   );
 
-  return { setImage, setLink, setYoutubeVideo, setTweet };
+  const setFbPost = useCallback(
+    (postUrl: string) => {
+      if (!editor) return;
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: 'facebook',
+          attrs: { postUrl },
+        })
+        .run();
+    },
+    [editor],
+  );
+
+  return { setImage, setLink, setYoutubeVideo, setTweet, setFbPost };
 };

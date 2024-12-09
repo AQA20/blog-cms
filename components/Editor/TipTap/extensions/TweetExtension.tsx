@@ -1,7 +1,7 @@
 import React from 'react';
 import { Node } from '@tiptap/core';
-import { createRoot, type Root } from 'react-dom/client';
-import { TweetComponent } from '@/components/Editor/TweetComponent/TweetComponent';
+import { createRoot } from 'react-dom/client';
+import { TweetComponent } from '@/components/Embeds/TweetComponent/TweetComponent';
 
 export const TweetExtension = Node.create({
   name: 'tweet', // Unique name for this node type
@@ -39,16 +39,18 @@ export const TweetExtension = Node.create({
       const container = document.createElement('div');
       container.className = 'tweet-container';
 
-      let root: Root | null = createRoot(container);
+      // Create a root once and reuse it
+      const root = createRoot(container);
+      // Render the React component
       root.render(<TweetComponent id={node.attrs.id} />);
 
       return {
         dom: container,
         destroy: () => {
-          if (root) {
+          // Ensure unmount only happens when not rendering
+          setTimeout(() => {
             root.unmount();
-            root = null;
-          }
+          });
         },
       };
     };

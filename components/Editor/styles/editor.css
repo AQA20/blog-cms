@@ -18,6 +18,9 @@
 .tiptap .tweet-container img {
   @apply my-0 h-auto w-auto;
 }
+.tiptap .fb-post iframe {
+  @apply my-0;
+}
 
 .tiptap p.is-editor-empty:first-child::before {
   color: hsl(var(--muted-foreground));
@@ -35,12 +38,12 @@
   pointer-events: none;
 }
 
-/* This selector targets any class that contains "tweet-container_root"  */
+/* This selector targets any class that contains "tweet-container-module"  */
 .tiptap [class*='tweet-container-module'] {
   @apply max-w-full sm:max-w-[680px];
 }
 
-/* This selector targets any class that contains "tweet-media_mediaContainer"  */
+/* This selector targets any class that contains "tweet-media-module'"  */
 .tiptap [class*='tweet-media-module'] {
   @apply max-h-[340px] sm:max-h-[510px];
 }

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Node } from '@tiptap/core';
 import { createRoot, type Root } from 'react-dom/client';
 import { TweetComponent } from '@/components/Editor/TweetComponent/TweetComponent';

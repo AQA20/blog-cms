@@ -15,6 +15,10 @@
   @apply my-4 h-[229px] w-[406px] max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
 }
 
+.tiptap .tweet-container img {
+  @apply my-0 h-auto w-auto;
+}
+
 .tiptap p.is-editor-empty:first-child::before {
   color: hsl(var(--muted-foreground));
   content: attr(data-placeholder);
@@ -40,7 +44,6 @@
 .tiptap [class*='tweet-media-module'] {
   @apply max-h-[340px] sm:max-h-[510px];
 }
-
 
 /* Character count */
 .character-count {

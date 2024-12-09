@@ -17,7 +17,7 @@ import {
   Undo,
   Redo,
   Youtube,
-  Twitter
+  Twitter,
 } from 'lucide-react';
 import { Toggle } from '@/components/ui/toggle';
 import { AppAlertDialog } from '@/components/AlertDialog/AlertDialog';
@@ -33,7 +33,8 @@ const toggleStyle = 'rounded-full';
 
 export const Toolbar = ({ editor }: Props) => {
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const { setImage, setLink, setYoutubeVideo, setTweet } = useTipTapEditorSetters(editor);
+  const { setImage, setLink, setYoutubeVideo, setTweet } =
+    useTipTapEditorSetters(editor);
   const { input, setInput, dialog, setDialog, handler } = useInputDialog();
 
   const openLinkPicker = () => {

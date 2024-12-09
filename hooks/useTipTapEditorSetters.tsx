@@ -1,7 +1,6 @@
 import { type Editor } from '@tiptap/react';
 import { useCallback } from 'react';
 
-
 interface TipTapEditorSetters {
   setImage: (event: React.ChangeEvent<HTMLInputElement>, alt: string) => void;
   setLink: (url: string) => void;
@@ -75,18 +74,20 @@ export const useTipTapEditorSetters = (
     [editor],
   );
 
-
   const setTweet = useCallback(
     (tweetId: string) => {
       if (!editor) return;
-      editor.chain().focus().insertContent({
-        type: 'tweet',
-        attrs: { id: tweetId },
-      }).run()
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: 'tweet',
+          attrs: { id: tweetId },
+        })
+        .run();
     },
     [editor],
   );
-
 
   return { setImage, setLink, setYoutubeVideo, setTweet };
 };

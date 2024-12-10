@@ -1,9 +1,0 @@
-/* This selector targets any class that contains "tweet-container_root"  */
-.tiptap [class*='tweet-container-module'] {
-  @apply max-w-full sm:max-w-[680px];
-}
-
-/* This selector targets any class that contains "tweet-media_mediaContainer"  */
-.tiptap [class*='tweet-media-module'] {
-  @apply max-h-[340px] sm:max-h-[510px];
-}

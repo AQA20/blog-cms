@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useEditor, EditorContent, type Editor } from '@tiptap/react';
 import { Toolbar } from '@/components/Editor/TipTap/Toolbar';
 import { useAppEditorConfig } from '@/hooks/useAppEditorConfig';
-import { FacebookPostEmbed } from '@/components/Embeds/FacebookPostEmbed/FacebookPostEmbed';
 import '../styles/editor.css';
 
 const TiptapEditor = ({
@@ -63,7 +62,7 @@ const TiptapEditor = ({
 
   return (
     <div
-      className={`tiptap flex min-h-[250px] flex-col justify-stretch ${className}`}
+      className={`tiptap flex max-h-fit min-h-[250px] flex-col justify-stretch ${className}`}
     >
       <div className="block">
         <Toolbar editor={editor} />
@@ -71,7 +70,7 @@ const TiptapEditor = ({
 
       <EditorContent
         dir="rtl"
-        className="mt-2 max-h-fit whitespace-pre-wrap"
+        className="mt-2 whitespace-pre-wrap"
         editor={editor}
       />
       <div className="character-count">

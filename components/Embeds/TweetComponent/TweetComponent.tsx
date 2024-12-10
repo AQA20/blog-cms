@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Tweet } from 'react-tweet';
-import './tweet.css';
+import styles from './tweet.module.css';
 
 export const TweetComponent = ({ id }: { id: string }) => {
   const components = {
@@ -9,7 +9,7 @@ export const TweetComponent = ({ id }: { id: string }) => {
     MediaImg: (props: any) => <Image {...props} fill unoptimized />,
   };
   return (
-    <div className="tweet-container">
+    <div className={styles.tweetContainer}>
       <Tweet id={id} components={components} />
     </div>
   );

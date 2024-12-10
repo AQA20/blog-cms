@@ -20,7 +20,7 @@ export const FacebookPostEmbed = ({ postUrl }: { postUrl: string }) => {
     if (!window.FB) {
       const script = document.createElement('script');
       script.src =
-        'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';
+        'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2';
       script.async = true;
       script.defer = true;
       script.crossOrigin = 'anonymous';
@@ -42,11 +42,13 @@ export const FacebookPostEmbed = ({ postUrl }: { postUrl: string }) => {
   return (
     <div
       key={key}
-      className="fb-post"
+      className={`${postUrl.includes('watch') ? 'fb-video' : 'fb-post'}`}
       data-href={postUrl}
       data-width={width}
       data-height={height}
       data-show-text={false}
+      data-show-control="true"
+      data-allowfullscreen="true"
     >
       <blockquote cite={postUrl} className="fb-xfbml-parse-ignore">
         <div className="flex h-[229px] w-full items-center justify-center rounded-[8px] border md:h-[510px] md:w-[680px]">

@@ -10,27 +10,25 @@
   color: skyblue;
 }
 
-
-.tiptap .react-tweet-theme {
-  @apply my-4 h-[500px] w-[406px] max-w-[100%] rounded-[8px] md:h-[760px] md:w-[680px];
+/* Ensure the editor container doesn't clip the cursor */
+.tiptap {
+  overflow: hidden; /* Prevent container overflow */
+  position: relative; /* Allow for child positioning */
 }
 
-.tiptap img  {
-  @apply  h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
-}
-
- [class*='watchOnTwitter'] {
-  @apply  hidden;
-}
- [class*='mediaContainer']  {
-  @apply h-[229px]  md:h-[510px];
+.tiptap img {
+  @apply my-4 h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
 }
 
 .tiptap .tweet-container img {
   @apply my-0 h-full w-full;
 }
 .tiptap .fb-post iframe {
-  @apply my-0;
+  @apply my-0 rounded-[8px];
+}
+
+.tiptap .fb_iframe_widget {
+  @apply my-4;
 }
 
 .tiptap p.is-editor-empty:first-child::before {

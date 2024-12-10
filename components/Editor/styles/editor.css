@@ -10,13 +10,24 @@
   color: skyblue;
 }
 
-.tiptap img,
-.tiptap iframe {
-  @apply my-4 h-[229px] w-[406px] max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
+
+.tiptap .react-tweet-theme {
+  @apply my-4 h-[500px] w-[406px] max-w-[100%] rounded-[8px] md:h-[760px] md:w-[680px];
+}
+
+.tiptap img  {
+  @apply  h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
+}
+
+ [class*='watchOnTwitter'] {
+  @apply  hidden;
+}
+ [class*='mediaContainer']  {
+  @apply h-[229px]  md:h-[510px];
 }
 
 .tiptap .tweet-container img {
-  @apply my-0 h-auto w-auto;
+  @apply my-0 h-full w-full;
 }
 .tiptap .fb-post iframe {
   @apply my-0;
@@ -36,16 +47,6 @@
   float: right;
   height: 0;
   pointer-events: none;
-}
-
-/* This selector targets any class that contains "tweet-container-module"  */
-.tiptap [class*='tweet-container-module'] {
-  @apply max-w-full sm:max-w-[680px];
-}
-
-/* This selector targets any class that contains "tweet-media-module'"  */
-.tiptap [class*='tweet-media-module'] {
-  @apply max-h-[340px] sm:max-h-[510px];
 }
 
 /* Character count */

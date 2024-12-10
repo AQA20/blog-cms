@@ -53,3 +53,16 @@
   gap: 0.5rem;
   margin: 0.5rem;
 }
+
+  /* This selector targets any class that contains "tweet-media-module"  */
+  [class*='tweet-media-module'] {
+    @apply max-h-[340px] sm:max-h-[510px];
+  }
+
+.tiptap [class*='watchOnTwitter'] {
+  @apply hidden;
+}
+
+.tiptap [class*='react-tweet-theme'] {
+  @apply my-4 max-w-full sm:max-w-[680px];
+}

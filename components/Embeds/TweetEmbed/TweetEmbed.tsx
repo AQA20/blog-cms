@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Tweet } from 'react-tweet';
 import styles from './tweet.module.css';
 
-export const TweetComponent = ({ id }: { id: string }) => {
+export const TweetEmbed = ({ id }: { id: string }) => {
   const components = {
     AvatarImg: (props: any) => <Image {...props} />,
     MediaImg: (props: any) => <Image {...props} fill unoptimized />,

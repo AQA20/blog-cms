@@ -54,10 +54,10 @@
   margin: 0.5rem;
 }
 
-  /* This selector targets any class that contains "tweet-media-module"  */
-  [class*='tweet-media-module'] {
-    @apply max-h-[340px] sm:max-h-[510px];
-  }
+/* This selector targets any class that contains "tweet-media-module"  */
+[class*='tweet-media-module'] {
+  @apply max-h-[340px] sm:max-h-[510px];
+}
 
 .tiptap [class*='watchOnTwitter'] {
   @apply hidden;

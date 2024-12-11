@@ -13,7 +13,7 @@ const useBreakpoint = createBreakpoint({
   '2xl': 1536,
 });
 
-export const FacebookPostEmbed = ({ postUrl }: { postUrl: string }) => {
+export const FacebookEmbed = ({ postUrl }: { postUrl: string }) => {
   const breakpoint = useBreakpoint();
   const [key, setKey] = useState(0); // Key to force re-render
   useEffect(() => {

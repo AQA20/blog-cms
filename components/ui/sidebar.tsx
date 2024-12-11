@@ -154,6 +154,7 @@ const SidebarProvider = React.forwardRef<
             )}
             ref={ref}
             {...props}
+            aria-hidden={!open}
           >
             {children}
           </div>

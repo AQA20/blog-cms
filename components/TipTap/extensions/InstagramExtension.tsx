@@ -1,10 +1,10 @@
 import React from 'react';
 import { Node } from '@tiptap/core';
 import { createRoot } from 'react-dom/client';
-import { FacebookPostEmbed } from '@/components/Embeds/FacebookPostEmbed/FacebookPostEmbed';
+import { InstagramEmbed } from '@/components/Embeds/InstagramEmbed/InstagramEmbed';
 
-export const FacebookExtension = Node.create({
-  name: 'facebook', // Unique name for this node
+export const InstagramExtension = Node.create({
+  name: 'instagram', // Unique name for this node
   group: 'block', // Block-level content
   atom: true, // Non-splittable node
 
@@ -19,11 +19,11 @@ export const FacebookExtension = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'div[data-facebook-post]', // Identify the HTML tag for this node
+        tag: 'div[data-insta-post]', // Identify the HTML tag for this node
         getAttrs: (dom) => {
           if (typeof dom === 'string') return {};
           const element = dom as HTMLElement;
-          return { postUrl: element.getAttribute('data-post-url') };
+          return { postUrl: element.getAttribute('data-instgrm-permalink') };
         },
       },
     ];
@@ -33,7 +33,10 @@ export const FacebookExtension = Node.create({
     // Render the node as HTML
     return [
       'div',
-      { 'data-facebook-post': '', 'data-post-url': HTMLAttributes.postUrl },
+      {
+        'data-insta-post': '',
+        'data-instgrm-permalink': HTMLAttributes.postUrl,
+      },
       '',
     ];
   },
@@ -44,7 +47,7 @@ export const FacebookExtension = Node.create({
       const root = createRoot(container);
 
       // Render the React component
-      root.render(<FacebookPostEmbed postUrl={node.attrs.postUrl} />);
+      root.render(<InstagramEmbed postUrl={node.attrs.postUrl} />);
 
       return {
         dom: container,

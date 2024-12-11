@@ -1,7 +1,7 @@
 import React from 'react';
 import { Node } from '@tiptap/core';
 import { createRoot } from 'react-dom/client';
-import { TweetComponent } from '@/components/Embeds/TweetComponent/TweetComponent';
+import { TweetEmbed } from '@/components/Embeds/TweetEmbed/TweetEmbed';
 
 export const TweetExtension = Node.create({
   name: 'tweet', // Unique name for this node type
@@ -42,7 +42,7 @@ export const TweetExtension = Node.create({
       // Create a root once and reuse it
       const root = createRoot(container);
       // Render the React component
-      root.render(<TweetComponent id={node.attrs.id} />);
+      root.render(<TweetEmbed id={node.attrs.id} />);
 
       return {
         dom: container,

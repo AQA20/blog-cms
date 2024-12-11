@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleEditor from '@/components/Editor/ArticleEditor';
+import ArticleEditor from '@/components/ArticleEditor/ArticleEditor';
 import {
   normalizeArticleForEdit,
   fetchArticle,

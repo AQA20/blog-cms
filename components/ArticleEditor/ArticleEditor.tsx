@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import TiptapEditor from '@/components/Editor/TipTap/TiptapEditor';
+import TiptapEditor from '@/components/TipTap/TiptapEditor';
 import { z } from 'zod';
 import { X } from 'lucide-react';
 import {

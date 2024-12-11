@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useEditor, EditorContent, type Editor } from '@tiptap/react';
-import { Toolbar } from '@/components/Editor/TipTap/Toolbar';
+import { Toolbar } from '@/components/TipTap/Toolbar';
 import { useAppEditorConfig } from '@/hooks/useAppEditorConfig';
-import '../styles/editor.css';
+import './styles/editor.css';
 
 const TiptapEditor = ({
   className,

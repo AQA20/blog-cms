@@ -10,6 +10,7 @@ import { useRef } from 'react';
 import { TweetExtension } from '@/components/TipTap/extensions/TweetExtension';
 import { FacebookExtension } from '@/components/TipTap/extensions/FacebookExtension';
 import { InstagramExtension } from '@/components/TipTap/extensions/InstagramExtension';
+import { BlockquoteExtension } from '@/components/TipTap/extensions/BlockquoteExtension';
 
 export const useAppEditorConfig = () => {
   const editorConfig = useRef({
@@ -18,6 +19,7 @@ export const useAppEditorConfig = () => {
       TweetExtension,
       FacebookExtension,
       InstagramExtension,
+      BlockquoteExtension,
       Placeholder.configure({
         placeholder: 'محتوى المقال هنا...',
       }),

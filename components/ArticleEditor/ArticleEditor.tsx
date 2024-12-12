@@ -145,7 +145,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
   /** Handle keyboard input for tags */
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.code === 'Period' && e.key === '.') {
+      if (e.code === 'Period' || e.code.includes('.') || e.key.includes('.')) {
         e.preventDefault();
         addTag();
       }

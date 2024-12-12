@@ -1,68 +1,68 @@
-.tiptap ul {
-  @apply list-disc space-y-2 pr-5;
-}
-
-.tiptap ol {
-  @apply list-decimal space-y-2 pr-5;
-}
-
-.tiptap a {
-  color: skyblue;
-}
-
-/* Ensure the editor container doesn't clip the cursor */
 .tiptap {
+  /* Ensure the editor container doesn't clip the cursor */
   overflow: hidden; /* Prevent container overflow */
   position: relative; /* Allow for child positioning */
-}
 
-.tiptap img {
-  @apply my-4 h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
-}
+  ul {
+    @apply list-disc space-y-2 pr-5;
+  }
 
-.tiptap .tweet-container img {
-  @apply my-0 h-full w-full;
-}
-.tiptap .fb-post iframe {
-  @apply my-0 rounded-[8px];
-}
+  ol {
+    @apply list-decimal space-y-2 pr-5;
+  }
 
-.tiptap .fb_iframe_widget {
-  @apply my-4;
-}
+  a {
+    color: skyblue;
+  }
 
-.tiptap p.is-editor-empty:first-child::before {
-  color: hsl(var(--muted-foreground));
-  content: attr(data-placeholder);
-  float: right;
-  height: 0;
-  pointer-events: none;
-}
+  img {
+    @apply my-4 h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
+  }
 
-.tiptap p.is-empty::before {
-  color: hsl(var(--muted-foreground));
-  content: attr(data-placeholder);
-  float: right;
-  height: 0;
-  pointer-events: none;
-}
+  .tweet-container img {
+    @apply my-0 h-full w-full;
+  }
+  .fb-post iframe {
+    @apply my-0 rounded-[8px];
+  }
 
-/* Character count */
-.character-count {
-  display: flex;
-  gap: 0.5rem;
-  margin: 0.5rem;
-}
+  .fb_iframe_widget {
+    @apply my-4;
+  }
 
-/* This selector targets any class that contains "tweet-media-module"  */
-[class*='tweet-media-module'] {
-  @apply max-h-[340px] sm:max-h-[510px];
-}
+  p.is-editor-empty:first-child::before {
+    color: hsl(var(--muted-foreground));
+    content: attr(data-placeholder);
+    float: right;
+    height: 0;
+    pointer-events: none;
+  }
 
-.tiptap [class*='watchOnTwitter'] {
-  @apply hidden;
-}
+  p.is-empty::before {
+    color: hsl(var(--muted-foreground));
+    content: attr(data-placeholder);
+    float: right;
+    height: 0;
+    pointer-events: none;
+  }
 
-.tiptap [class*='react-tweet-theme'] {
-  @apply my-4 max-w-full sm:max-w-[680px];
+  /* Character count */
+  .character-count {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem;
+  }
+
+  /* This selector targets any class that contains "tweet-media-module"  */
+  [class*='tweet-media-module'] {
+    @apply max-h-[340px] sm:max-h-[510px];
+  }
+
+  [class*='watchOnTwitter'] {
+    @apply hidden;
+  }
+
+  [class*='react-tweet-theme'] {
+    @apply my-4 max-w-full sm:max-w-[680px];
+  }
 }

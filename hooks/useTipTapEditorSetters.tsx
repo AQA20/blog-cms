@@ -1,5 +1,6 @@
 import { type Editor } from '@tiptap/react';
 import { useCallback } from 'react';
+import { Quote } from '@/types/Quote';
 
 interface TipTapEditorSetters {
   setImage: (event: React.ChangeEvent<HTMLInputElement>, alt: string) => void;
@@ -8,6 +9,7 @@ interface TipTapEditorSetters {
   setTweet: (tweetId: string) => void;
   setFbPost: (postUrl: string) => void;
   setInstaPost: (postUrl: string) => void;
+  setQuote: (quote: string, setQuoteB: string) => void;
 }
 
 export const useTipTapEditorSetters = (
@@ -120,6 +122,20 @@ export const useTipTapEditorSetters = (
     },
     [editor],
   );
+  const setQuote = useCallback(
+    (quote: string, quoteBy: string) => {
+      if (!editor) return;
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: 'quote',
+          attrs: { quote, quoteBy },
+        })
+        .run();
+    },
+    [editor],
+  );
 
   return {
     setImage,
@@ -128,5 +144,6 @@ export const useTipTapEditorSetters = (
     setTweet,
     setFbPost,
     setInstaPost,
+    setQuote,
   };
 };

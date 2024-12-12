@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { type Editor } from '@tiptap/react';
 import {
   Bold,
@@ -20,12 +20,13 @@ import {
   Twitter,
   Facebook,
   Instagram,
+  Quote,
 } from 'lucide-react';
 import { Toggle } from '@/components/ui/toggle';
-import { AppAlertDialog } from '@/components/AlertDialog/AlertDialog';
-import { Input } from '@/components/ui/input';
 import { useTipTapEditorSetters } from '@/hooks/useTipTapEditorSetters';
 import { useInputDialog } from '@/hooks/useInputDialog';
+import { InputDialogComponent } from '@/components/InputDialogComponent/InputDialogComponent';
+import { QuoteDialogComponent } from '../QuoteDialogComponent/QuoteDialogCompnent';
 
 type Props = {
   editor: Editor | null;
@@ -35,6 +36,7 @@ const toggleStyle = 'rounded-full';
 
 export const Toolbar = ({ editor }: Props) => {
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const [openQuoteDialog, setOpenQuoteDialog] = useState(false);
   const {
     setImage,
     setLink,
@@ -42,6 +44,7 @@ export const Toolbar = ({ editor }: Props) => {
     setTweet,
     setFbPost,
     setInstaPost,
+    setQuote,
   } = useTipTapEditorSetters(editor);
   const { input, setInput, dialog, setDialog, handler } = useInputDialog();
 
@@ -100,17 +103,24 @@ export const Toolbar = ({ editor }: Props) => {
     });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
+  const handleInputChange = (value: string) => {
     setInput((prev) => ({
       ...prev,
-      value: newValue, // Update the input's value dynamically
+      value: value, // Update the input's value dynamically
     }));
-    // Update dialog onConfirm function with the nextValue
+    // Updates the onConfirm function with the new input's value I had to do
+    // this because of the asynchronous behavior of state update as it doesn't
+    // updates the value immediately so in order to get the latest input value I
+    // have to reset the onConfirm callback providing it with latest value
     setDialog({
       ...dialog,
-      onConfirm: () => dialog.onConfirm(newValue),
+      onConfirm: () => dialog.onConfirm(value),
     });
+  };
+
+  const handleQuoteDialogConfirm = (quote: string, quoteBy: string) => {
+    setQuote(quote, quoteBy);
+    setOpenQuoteDialog(false);
   };
 
   if (!editor) return null;
@@ -124,22 +134,19 @@ export const Toolbar = ({ editor }: Props) => {
         ref={imageInputRef}
         onChange={(e) => setImage(e, input.value)}
       />
+      <InputDialogComponent
+        input={input}
+        dialog={dialog}
+        onDialogChange={() => setDialog({ ...dialog, open: !dialog.open })}
+        onInputChange={handleInputChange}
+      />
 
-      <AppAlertDialog
-        title={dialog.title}
-        description={dialog.description}
-        onConfirm={dialog.onConfirm}
-        open={dialog.open}
-        dismiss={dialog.dismiss}
-        onOpenChange={() => setDialog({ ...dialog, open: !dialog.open })}
-      >
-        <Input
-          type="text"
-          placeholder={input.placeholder}
-          value={input.value}
-          onChange={handleInputChange}
-        />
-      </AppAlertDialog>
+      <QuoteDialogComponent
+        isOpen={openQuoteDialog}
+        onConfirm={handleQuoteDialogConfirm}
+        onOpenChange={() => setOpenQuoteDialog(!openQuoteDialog)}
+      />
+
       <Toggle
         size="lg"
         className={toggleStyle}
@@ -207,6 +214,14 @@ export const Toolbar = ({ editor }: Props) => {
         onPressedChange={openInstaPicker}
       >
         <Instagram className="h-6 w-6" />
+      </Toggle>
+      <Toggle
+        size="lg"
+        className={toggleStyle}
+        pressed={editor.isActive('quote')}
+        onPressedChange={() => setOpenQuoteDialog(true)}
+      >
+        <Quote className="h-6 w-6" />
       </Toggle>
       <Toggle
         size="lg"

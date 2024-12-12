@@ -3,6 +3,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { validateHTML, stripHTMLTags } from '@/lib/utils';
 import { useUnsavedChanges } from '@/hooks/useUnsavedChanges';
+import {
+  TITLE_MIN_LENGTH,
+  TITLE_MAX_LENGTH,
+  DESC_MIN_LENGTH,
+  DESC_MAX_LENGTH,
+  CONTENT_MIN_LENGTH,
+  CONTENT_MAX_LENGTH,
+} from '@/lib/constants';
 
 const isValidImg = (url: string): Promise<boolean> => {
   return new Promise((resolve) => {
@@ -33,12 +41,12 @@ const validateImgsInContent = async (html: string): Promise<boolean> => {
 const formSchema = z.object({
   title: z
     .string()
-    .min(50, 'Title must be at least 50 characters.')
-    .max(100, 'Title cannot exceed 100 characters.'),
+    .min(TITLE_MIN_LENGTH, 'Title must be at least 50 characters.')
+    .max(TITLE_MAX_LENGTH, 'Title cannot exceed 100 characters.'),
   description: z
     .string()
-    .min(160, 'Description must be at 160 characters.')
-    .max(300, 'Description cannot exceed 300 characters.'),
+    .min(DESC_MIN_LENGTH, 'Description must be at 160 characters.')
+    .max(DESC_MAX_LENGTH, 'Description cannot exceed 300 characters.'),
   category: z
     .string()
     .min(2, 'Category must be at least 2 characters.')
@@ -78,7 +86,9 @@ const formSchema = z.object({
       (html) => {
         const textContent = stripHTMLTags(html);
         const wordCount = textContent.trim().split(/\s+/).length;
-        return wordCount >= 300 && wordCount <= 5000;
+        return (
+          wordCount >= CONTENT_MIN_LENGTH && wordCount <= CONTENT_MAX_LENGTH
+        );
       },
       {
         message:

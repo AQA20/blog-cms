@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useDialog } from '@/hooks/useDialog';
 
-interface InputDialogHandler {
-  placeholder: string;
+export interface InputDialogHandler {
+  placeholder?: string;
   title: string;
   description: string;
   dismiss?: boolean;
-  handleConfirm: (value: string) => void;
+  handleConfirm: (...args: any[]) => void;
 }
 
-interface DialogState {
+export interface DialogState {
   open: boolean;
   title: string;
   description: string;
@@ -17,7 +17,13 @@ interface DialogState {
   dismiss?: boolean;
 }
 
-interface UseInputDialogReturn {
+export interface InputType {
+  placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface UseInputDialogReturn {
   input: {
     placeholder: string;
     value: string;
@@ -36,11 +42,7 @@ interface UseInputDialogReturn {
 }
 
 export const useInputDialog = (): UseInputDialogReturn => {
-  const [input, setInput] = useState<{
-    placeholder: string;
-    value: string;
-    onChange: (value: string) => void;
-  }>({
+  const [input, setInput] = useState<InputType>({
     placeholder: '',
     value: '',
     onChange: (value) => {},
@@ -54,7 +56,7 @@ export const useInputDialog = (): UseInputDialogReturn => {
     handleConfirm,
   }: InputDialogHandler) => {
     //Set input placeholder
-    setInput((prev) => ({ ...prev, placeholder }));
+    if (placeholder) setInput((prev) => ({ ...prev, placeholder }));
     setDialog({
       open: true,
       title,

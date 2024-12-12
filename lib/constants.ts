@@ -21,7 +21,7 @@ export const DEFAULT_VARIANTS: Record<'success' | 'error', ToastVariant> = {
 
 export const TITLE_MAX_LENGTH = 100;
 export const TITLE_MIN_LENGTH = 50;
-export const DESC_MAX_LENGTH = 160;
-export const DESC_MIN_LENGTH = 300;
-export const CONTENT_MAX_LENGTH = 140;
-export const CONTENT_MIN_LENGTH = 5000;
+export const DESC_MIN_LENGTH = 160;
+export const DESC_MAX_LENGTH = 300;
+export const CONTENT_MIN_LENGTH = 140;
+export const CONTENT_MAX_LENGTH = 5000;

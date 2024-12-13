@@ -65,4 +65,13 @@
   [class*='react-tweet-theme'] {
     @apply my-4 max-w-full sm:max-w-[680px];
   }
+  .fb-post iframe,
+  .fb-video iframe {
+    border-radius: 8px !important;
+  }
+
+  .instagram-media {
+    min-width: auto !important;
+    border-radius: 8px !important;
+  }
 }

@@ -36,13 +36,13 @@ export const FacebookEmbed = ({ postUrl }: { postUrl: string }) => {
     setKey((prev) => prev + 1);
   }, [breakpoint]);
 
-  const width = breakpoint === 'sm' ? 'auto' : '680';
+  const width = breakpoint === 'sm' ? '100%' : '680';
   const height = breakpoint === 'sm' ? '229' : '510';
 
   return (
     <div
       key={key}
-      className={`${postUrl.includes('watch') ? 'fb-video' : 'fb-post'}`}
+      className={`rounded-[8px] ${postUrl.includes('watch') ? 'fb-video' : 'fb-post'}`}
       data-href={postUrl}
       data-width={width}
       data-height={height}

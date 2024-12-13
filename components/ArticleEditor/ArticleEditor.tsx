@@ -206,8 +206,9 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
               render={() => (
                 <FormItem className="flex-1">
                   <FormLabel>
-                    Tags
-                    <span className="text-zinc-500">
+                    Tags{' '}
+                    <span className="ml-1 text-zinc-500">
+                      {' '}
                       (Type a tag and press period . to add it)
                     </span>
                   </FormLabel>

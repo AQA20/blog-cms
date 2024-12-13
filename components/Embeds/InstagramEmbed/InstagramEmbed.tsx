@@ -34,7 +34,7 @@ export const InstagramEmbed = ({ postUrl }: { postUrl: string }) => {
     setKey((prev) => prev + 1);
   }, [breakpoint]);
 
-  const width = breakpoint === 'sm' ? '100vw' : '680px';
+  const width = breakpoint === 'sm' ? '100%' : '680px';
 
   return (
     <div className="my-4" key={key}>
@@ -43,6 +43,8 @@ export const InstagramEmbed = ({ postUrl }: { postUrl: string }) => {
         data-instgrm-permalink={postUrl}
         data-instgrm-version="14"
         style={{
+          margin: 0,
+          padding: 0,
           maxWidth: '100%',
           width,
         }}

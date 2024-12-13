@@ -32,23 +32,21 @@ export const QuoteDialogComponent: React.FC<Props> = ({
     <AppAlertDialog
       className={className}
       title="Add a quote to your article."
-      description="Add a quote and attribute it to the person who said it."
+      description="Quote and attribute the speaker."
       onConfirm={onDialogConfirm}
       open={isOpen}
       onOpenChange={onOpenChange}
     >
       <FormLabel className="my-2">Quote text</FormLabel>
       <Textarea
-        dir="rtl"
         placeholder="Enter quote content"
         className="h-[220px] resize-none overflow-hidden md:h-[80px]"
         maxLength={200}
         value={quote}
         onChange={(e) => setQuote(e.target.value)}
       />
-      <FormLabel className="my-2">QuoteBy text</FormLabel>
+      <FormLabel className="my-2">QuoteBy</FormLabel>
       <Input
-        dir="rtl"
         type="text"
         placeholder="The person who said it"
         value={quoteBy}

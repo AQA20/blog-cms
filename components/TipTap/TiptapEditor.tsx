@@ -64,7 +64,7 @@ const TiptapEditor = ({
     <div
       className={`tiptap my-2 flex max-h-fit min-h-[250px] flex-col justify-stretch ${className}`}
     >
-      <div className="block">
+      <div className="my-2 block">
         <Toolbar editor={editor} />
       </div>
 

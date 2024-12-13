@@ -74,4 +74,8 @@
     min-width: auto !important;
     border-radius: 8px !important;
   }
+
+  div[data-youtube-video] iframe {
+    @apply my-2 max-w-full max-h-[240px] sm:w-[680px] sm:min-h-[510px] rounded-[8px];
+  }
 }

@@ -38,30 +38,10 @@ export const ArticleCardAction = ({ itemId }: { itemId: number }) => {
             </Button>
           </>
         );
-      case 'Approved':
-        return (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleActionStatusChange('Rejected')}
-          >
-            Reject
-          </Button>
-        );
       case 'Trashed':
         return (
           <Button variant="outline" size="sm" onClick={handleActionRestore}>
             Restore
-          </Button>
-        );
-      default:
-        return (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleActionStatusChange('Approved')}
-          >
-            Approve
           </Button>
         );
     }

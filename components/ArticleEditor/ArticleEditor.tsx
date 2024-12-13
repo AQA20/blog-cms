@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import TiptapEditor from '@/components/TipTap/TiptapEditor';
 import { z } from 'zod';
 import { X } from 'lucide-react';
@@ -40,6 +40,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
   const { form, formSchema } = useArticleForm(!!article);
   type FormFields = z.infer<typeof formSchema>;
   const validKeys = Object.keys(formSchema.shape) as Array<keyof FormFields>;
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -206,9 +207,8 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
               render={() => (
                 <FormItem className="flex-1">
                   <FormLabel>
-                    Tags{' '}
+                    Tags
                     <span className="ml-1 text-zinc-500">
-                      {' '}
                       (Type a tag and press period . to add it)
                     </span>
                   </FormLabel>
@@ -280,17 +280,32 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                   </span>
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    type="file"
-                    className="w-full sm:w-fit"
-                    accept="image/*"
-                    onChange={(e) =>
-                      form.setValue(
-                        'thumbnail',
-                        e.target.files?.[0] || undefined,
-                      )
-                    }
-                  />
+                  <div className="relative w-full sm:w-fit">
+                    <Input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        form.setValue(
+                          'thumbnail',
+                          e.target.files?.[0] || undefined,
+                        )
+                      }
+                    />
+                    {form.getValues('thumbnail') && (
+                      <X
+                        className="absolute right-3 top-[10px] cursor-pointer"
+                        size={16}
+                        onClick={() => {
+                          form.setValue('thumbnail', undefined); // Clear form state
+                          if (fileInputRef.current) {
+                            fileInputRef.current.value = ''; // Reset input value
+                          }
+                        }}
+                        aria-label="Remove file"
+                      />
+                    )}
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

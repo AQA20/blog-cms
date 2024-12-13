@@ -1,6 +1,8 @@
 # 500kalima CMS Dashboard
 
-This project is a CMS dashboard for **500kalima.com**, built using **Next.js** and **TypeScript**. The dashboard is currently accessible only by admins, but we will provide an example URL (e.g., [test.500kalima.com](https://test.500kalima.com)) where you can test the CMS dashboard on a dummy blog.
+This project is a CMS dashboard for `500kalima.com`, built using `Next.js` and `TypeScript`. The dashboard is currently accessible only by admins, but you can access the test dashboard ([manage.500kalima.com](https://manage.500kalima.com)) where you can test it on a dummy blog.
+
+---
 
 ## Prerequisites
 
@@ -8,6 +10,8 @@ Before you start using the CMS dashboard, ensure the following:
 
 1. **500kalima API server** must be up and running. This is crucial for the CMS to function correctly.
 2. Clone and set up the API server by following the instructions in the [500kalima API repository](https://github.com/AQA20/500kalima).
+
+---
 
 ## Setup Guide
 
@@ -53,7 +57,7 @@ environment variables. You'll need to configure the `NEXT_PUBLIC_API_URL` to poi
 Example `.env` file:
 
 ```bash
-NEXT_PUBLIC_API_URL=https://500kalima.com/api
+NEXT_PUBLIC_API_URL=https://500kalima.com/node-api
 ```
 
 Make sure to replace the API_URL with your actual API server URL.
@@ -71,6 +75,8 @@ This will start the CMS dashboard on http://localhost:3000 by default.
 ### 5. Accessing the CMS Dashboard
 
 To access the CMS dashboard, you will need admin credentials. If you want to test the dashboard on a dummy blog, we will provide login details and a test URL (e.g., test.500kalima.com) shortly.
+
+---
 
 ## Available Scripts
 
@@ -124,9 +130,13 @@ npm run test
 npm run coverage
 ```
 
+---
+
 ## Contributing
 
 Feel free to contribute to this project by submitting issues and pull requests. To get started, fork the repository and create a branch for your changes.
+
+---
 
 ## License
 

@@ -46,6 +46,7 @@ jobs:
           npm run lint
 
       - name: Run Unit Tests on Production
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           npm run test
         env:
@@ -56,6 +57,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
 
       - name: Run Unit Tests on Test Environment
+        if: ${{ github.ref == 'refs/heads/test' }}
         run: |
           npm run test
         env:

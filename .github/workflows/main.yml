@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test
 
 jobs:
   install_dependencies:
@@ -11,6 +12,13 @@ jobs:
     outputs:
       node_modules: ${{ steps.cache_node_modules.outputs.cache-hit }}
     steps:
+      - name: Set Environment Variables
+        id: set-env
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/test" ]; then
+            echo "CACHE_KEY=test-cache-key" >> $GITHUB_ENV
+          else
+            echo "CACHE_KEY=prod-cache-key" >> $GITHUB_ENV
       - name: Checkout Code
         uses: actions/checkout@v3
 
@@ -20,9 +28,9 @@ jobs:
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-admin-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-admin-
+            ${{ runner.os }}-admin-${{ env.CACHE_KEY }}
 
       - name: Install npm dependencies
         run: |
@@ -36,35 +44,58 @@ jobs:
         run: |
           npm run lint
 
-      - name: Run Unit Tests
+      - name: Run Unit Tests on Production
         run: |
           npm run test
         env:
-          NEXT_PUBLIC_NEXT_ENV: ${{ secrets.NEXT_PUBLIC_NEXT_ENV }}
+          NEXT_PUBLIC_NEXT_ENV: 'production'
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL }}
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
 
+      - name: Run Unit Tests on Test Environment
+        run: |
+          npm run test
+        env:
+          NEXT_PUBLIC_NEXT_ENV: 'testing'
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
+          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
+          EMAIL: ${{ secrets.EMAIL_TEST }}
+          PASSWORD: ${{ secrets.PASSWORD_TEST }}
+
   build:
     runs-on: self-hosted
     needs: tests # Ensure tests pass before building
     steps:
-      - name: Build Admin Application
+      - name: Build Admin Application to Production
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           npm run build  # Build the admin application
           pm2 restart "admin" || pm2 start npm --name "admin" -- start
           pm2 save
         env:
-          NEXT_PUBLIC_NODE_ENV: ${{ secrets.NEXT_PUBLIC_NODE_ENV }}
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL }}
+          NEXT_PUBLIC_NODE_ENV: 'production'
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
+          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
+
+      - name: Build Admin Application to Test Environment
+        if: ${{ github.ref == 'refs/heads/test' }}
+        run: |
+          npm run build  # Build the admin application
+          pm2 restart "manage" || pm2 Ax start npm --name "manage" -- start
+          pm2 save
+        env:
+          NEXT_PUBLIC_NODE_ENV: 'testing'
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
+          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
 
   deploy:
     runs-on: self-hosted
     needs: build # Ensure the app is built before deploying
     steps:
-      - name: Deploy Admin Build and Restart Services
+      - name: Deploy Admin Build to Production
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           # Build the admin application in a temporary directory to minimize downtime
           sudo mkdir -p /var/www/admin_temp
@@ -74,5 +105,20 @@ jobs:
           sudo mv /var/www/admin_temp/.next /var/www/admin/.next
           # Remove temp directory
           sudo rm -rf /var/www/admin_temp
+
+      - name: Deploy Admin Build to Test Environment
+        if: ${{ github.ref == 'refs/heads/test' }}
+        run: |
+          # Build the admin application in a temporary directory to minimize downtime
+          sudo mkdir -p /var/www/manage_temp
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/manage_temp/
+          sudo rm -rf /var/www/manage/.next
+          # Replace the old version with the new version
+          sudo mv /var/www/manage_temp/.next /var/www/manage/.next
+          # Remove temp directory
+          sudo rm -rf /var/www/manage_temp
+
+      - name: Restart Nginx Service
+        run: |
           sudo systemctl reload nginx
           sudo systemctl restart nginx

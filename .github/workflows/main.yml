@@ -16,12 +16,12 @@ jobs:
         id: set-env
         run: |
           if [ "${{ github.ref }}" == "refs/heads/test" ]; then
-            echo "CACHE_KEY=test-cache-key" >> $GITHUB_ENV
+            echo "CACHE_KEY=testing" >> $GITHUB_ENV
           else
-            echo "CACHE_KEY=prod-cache-key" >> $GITHUB_ENV
+            echo "CACHE_KEY=production" >> $GITHUB_ENV
           fi
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache npm dependencies
         id: cache_node_modules

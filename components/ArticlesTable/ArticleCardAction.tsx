@@ -38,6 +38,44 @@ export const ArticleCardAction = ({ itemId }: { itemId: number }) => {
             </Button>
           </>
         );
+      case 'Approved':
+        return (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleActionStatusChange('Rejected')}
+            >
+              Reject
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleActionStatusChange('Pending')}
+            >
+              Move to Pending
+            </Button>
+          </>
+        );
+      case 'Rejected':
+        return (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleActionStatusChange('Approved')}
+            >
+              Approve
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleActionStatusChange('Pending')}
+            >
+              Move to Pending
+            </Button>
+          </>
+        );
       case 'Trashed':
         return (
           <Button variant="outline" size="sm" onClick={handleActionRestore}>

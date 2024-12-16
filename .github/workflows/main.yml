@@ -53,6 +53,7 @@ jobs:
           NEXT_PUBLIC_NEXT_ENV: 'production'
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL }}
+          PORT: ${{ secrets.PORT }}
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
 
@@ -64,6 +65,7 @@ jobs:
           NEXT_PUBLIC_NEXT_ENV: 'testing'
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
+          PORT: ${{ secrets.PORT_TEST }}
           EMAIL: ${{ secrets.EMAIL_TEST }}
           PASSWORD: ${{ secrets.PASSWORD_TEST }}
 
@@ -81,17 +83,19 @@ jobs:
           NEXT_PUBLIC_NODE_ENV: 'production'
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
+          PORT: ${{ secrets.PORT }}
 
       - name: Build Admin Application to Test Environment
         if: ${{ github.ref == 'refs/heads/test' }}
         run: |
           npm run build  # Build the admin application
-          pm2 restart "manage" || pm2 Ax start npm --name "manage" -- start
+          pm2 restart "manage" || pm2 start pm2.config.cjs
           pm2 save
         env:
           NEXT_PUBLIC_NODE_ENV: 'testing'
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
+          PORT: ${{ secrets.PORT_TEST }}
 
   deploy:
     runs-on: self-hosted

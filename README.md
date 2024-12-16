@@ -1,6 +1,9 @@
 # 500kalima CMS Dashboard
 
-This project is a CMS dashboard for `500kalima.com`, built using `Next.js` and `TypeScript`. The dashboard is currently accessible only by admins, but you can access the test dashboard ([manage.500kalima.com](https://manage.500kalima.com)) where you can test it on a dummy blog.
+This project is a CMS dashboard for `500kalima.com`, built using `Next.js` and `TypeScript`. The dashboard is currently only accessibly by admins, but you can access the test dashboard ([manage.500kalima.com](https://manage.500kalima.com)) where you can test it on a dummy blog ([test.500kalima.com](https://test.500kalima.com)).
+
+Test Email: `test@500kalima.com`
+Test password: `Qzbs2+Clw%fK4p6`
 
 ---
 

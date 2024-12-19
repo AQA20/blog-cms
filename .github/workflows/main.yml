@@ -78,6 +78,7 @@ jobs:
       - name: Build Admin Application to Production
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
+          rm -rf .next  # Clean up previous build artifacts
           npm run build  # Build the admin application
           pm2 restart "${{ secrets.PM2_NAME }}" || pm2 start pm2.config.cjs
           pm2 save
@@ -91,6 +92,7 @@ jobs:
       - name: Build Admin Application to Test Environment
         if: ${{ github.ref == 'refs/heads/test' }}
         run: |
+          rm -rf .next  # Clean up previous build artifacts
           npm run build  # Build the admin application
           pm2 restart "${{ secrets.PM2_NAME_TEST }}" || pm2 start pm2.config.cjs
           pm2 save
@@ -108,14 +110,12 @@ jobs:
       - name: Deploy Admin Build to Production
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          sudo rm -rf /var/www/admin/.next
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/admin/.next
+          sudo rsync -a --delete ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/admin/.next
 
       - name: Deploy Admin Build to Test Environment
         if: ${{ github.ref == 'refs/heads/test' }}
         run: |
-          sudo rm -rf /var/www/manage/.next
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/manage/.next
+          sudo rsync -a --delete ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/manage/.next
       - name: Restart Nginx Service
         run: |
           sudo systemctl reload nginx

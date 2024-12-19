@@ -108,12 +108,12 @@ jobs:
       - name: Deploy Admin Build to Production
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          sudo rsync -a --delete ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next var/www/admin/.next
+          sudo rsync -a --delete ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/admin/.next
 
       - name: Deploy Admin Build to Test Environment
         if: ${{ github.ref == 'refs/heads/test' }}
         run: |
-          sudo rsync -a --delete ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next var/www/manage/.next
+          sudo rsync -a --delete ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/manage/.next
       - name: Restart Nginx Service
         run: |
           sudo systemctl reload nginx

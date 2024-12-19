@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { createBreakpoint } from 'react-use';
 
 const useBreakpoint = createBreakpoint({
@@ -16,6 +18,8 @@ const useBreakpoint = createBreakpoint({
 export const FacebookEmbed = ({ postUrl }: { postUrl: string }) => {
   const breakpoint = useBreakpoint();
   const [key, setKey] = useState(0); // Key to force re-render
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     if (!window.FB) {
       const script = document.createElement('script');
@@ -36,8 +40,16 @@ export const FacebookEmbed = ({ postUrl }: { postUrl: string }) => {
     setKey((prev) => prev + 1);
   }, [breakpoint]);
 
-  const width = breakpoint === 'sm' ? '100%' : '680';
-  const height = breakpoint === 'sm' ? '229' : '510';
+  useLayoutEffect(() => {
+    // Update viewport width on resize
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const width = breakpoint === 'sm' ? viewportWidth : 680;
+  const height = breakpoint === 'sm' ? 229 : 510;
 
   return (
     <div

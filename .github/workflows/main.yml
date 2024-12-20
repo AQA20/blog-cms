@@ -110,14 +110,26 @@ jobs:
       - name: Deploy Admin Build to Production
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
+          # Build the admin application in a temporary directory to minimize downtime
+          sudo mkdir -p /var/www/admin_temp
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/admin_temp/
           sudo rm -rf /var/www/admin/.next
-          sudo cp -rf ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/admin/.next
+          # Replace the old version with the new version
+          sudo mv /var/www/admin_temp/.next /var/www/admin/.next
+          # Remove temp directory
+          sudo rm -rf /var/www/admin_temp
 
       - name: Deploy Admin Build to Test Environment
         if: ${{ github.ref == 'refs/heads/test' }}
         run: |
+          # Build the admin application in a temporary directory to minimize downtime
+          sudo mkdir -p /var/www/manage_temp
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/manage_temp/
           sudo rm -rf /var/www/manage/.next
-          sudo cp -rf ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/.next /var/www/manage/.next
+          # Replace the old version with the new version
+          sudo mv /var/www/manage_temp/.next /var/www/manage/.next
+          # Remove temp directory
+          sudo rm -rf /var/www/manage_temp
       - name: Restart Nginx Service
         run: |
           sudo systemctl reload nginx

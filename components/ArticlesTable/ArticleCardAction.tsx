@@ -48,13 +48,6 @@ export const ArticleCardAction = ({ itemId }: { itemId: number }) => {
             >
               Reject
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleActionStatusChange('Pending')}
-            >
-              Move to Pending
-            </Button>
           </>
         );
       case 'Rejected':
@@ -66,13 +59,6 @@ export const ArticleCardAction = ({ itemId }: { itemId: number }) => {
               onClick={() => handleActionStatusChange('Approved')}
             >
               Approve
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleActionStatusChange('Pending')}
-            >
-              Move to Pending
             </Button>
           </>
         );

@@ -53,17 +53,17 @@
     margin: 0.5rem;
   }
 
-  /* This selector targets any class that contains "tweet-media-module"  */
-  [class*='tweet-media-module'] {
+  /* This selector targets any class that contains "tweet-media-module"  */  /* This selector targets any class that contains "tweet-container_root"  */
+  [class*='tweet-container_root'] {
+    @apply max-w-full sm:max-w-[680px];
+  }
+  /* This selector targets any class that contains "mediaContainer"  */
+  [class*='mediaContainer'] {
     @apply max-h-[340px] sm:max-h-[510px];
   }
 
   [class*='watchOnTwitter'] {
     @apply hidden;
-  }
-
-  [class*='react-tweet-theme'] {
-    @apply my-4 max-w-full sm:max-w-[680px];
   }
   .fb-post iframe,
   .fb-video iframe {

@@ -41,12 +41,24 @@ const validateImgsInContent = async (html: string): Promise<boolean> => {
 const formSchema = z.object({
   title: z
     .string()
-    .min(TITLE_MIN_LENGTH, 'Title must be at least 50 characters.')
-    .max(TITLE_MAX_LENGTH, 'Title cannot exceed 100 characters.'),
+    .min(
+      TITLE_MIN_LENGTH,
+      `Title must be at least ${TITLE_MIN_LENGTH} characters.`,
+    )
+    .max(
+      TITLE_MAX_LENGTH,
+      `Title cannot exceed ${TITLE_MAX_LENGTH} characters.`,
+    ),
   description: z
     .string()
-    .min(DESC_MIN_LENGTH, 'Description must be at 160 characters.')
-    .max(DESC_MAX_LENGTH, 'Description cannot exceed 300 characters.'),
+    .min(
+      DESC_MIN_LENGTH,
+      `Description must be at least ${DESC_MIN_LENGTH} characters.`,
+    )
+    .max(
+      DESC_MAX_LENGTH,
+      `Description cannot exceed ${DESC_MAX_LENGTH} characters.`,
+    ),
   category: z
     .string()
     .min(2, 'Category must be at least 2 characters.')
@@ -66,7 +78,7 @@ const formSchema = z.object({
       },
     )
     .refine(
-      (tags) => tags.every((tag) => /^[a-zA-Z\u0600-\u06FF\s]+$/.test(tag)),
+      (tags) => tags.every((tag) => /^[a-zA-Z\u0600-\u06FF\s0-9]+$/.test(tag)),
       {
         message: 'Each tag can only contain letters and spaces.',
       },
@@ -91,8 +103,7 @@ const formSchema = z.object({
         );
       },
       {
-        message:
-          'Content must have between 300 and 5000 words (excluding HTML tags).',
+        message: `Content must have between ${CONTENT_MIN_LENGTH} and ${CONTENT_MAX_LENGTH} words (excluding HTML tags).`,
       },
     )
     .refine(

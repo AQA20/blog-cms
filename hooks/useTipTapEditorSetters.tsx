@@ -1,6 +1,5 @@
 import { type Editor } from '@tiptap/react';
 import { useCallback } from 'react';
-import { Quote } from '@/types/Quote';
 
 interface TipTapEditorSetters {
   setImage: (event: React.ChangeEvent<HTMLInputElement>, alt: string) => void;
@@ -34,6 +33,9 @@ export const useTipTapEditorSetters = (
             })
             .run();
         }
+      };
+      reader.onerror = (err) => {
+        console.error(err);
       };
       reader.readAsDataURL(file); // Convert image to Base64
     },

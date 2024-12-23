@@ -24,7 +24,7 @@ const TiptapEditor = ({
     editorProps: {
       attributes: {
         class:
-          'rounded-md border border-input focus:border-input border-border p-3 min-h-[200px] space-y-2 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+          'rounded-md border border-input focus:border-input border-border px-3 py-8 min-h-[200px] space-y-2 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
       },
       handlePaste: (view, event) => {
         // Get the clipboard data
@@ -70,7 +70,7 @@ const TiptapEditor = ({
 
       <EditorContent
         dir="rtl"
-        className="mt-2 whitespace-pre-wrap"
+        className="mt-2 h-fit whitespace-pre-wrap rounded-[8px] border"
         editor={editor}
       />
       <div className="character-count">

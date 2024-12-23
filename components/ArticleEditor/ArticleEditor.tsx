@@ -280,7 +280,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                   </span>
                 </FormLabel>
                 <FormControl>
-                  <div className="relative w-full sm:w-fit">
+                  <div className="relative w-full sm:w-[300px]">
                     <Input
                       ref={fileInputRef}
                       type="file"
@@ -291,6 +291,7 @@ const ArticleEditor: React.FC<Props> = ({ article }) => {
                           e.target.files?.[0] || undefined,
                         )
                       }
+                      className="overflow-hidden text-ellipsis whitespace-nowrap pr-10"
                     />
                     {form.getValues('thumbnail') && (
                       <X

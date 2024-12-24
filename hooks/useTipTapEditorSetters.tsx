@@ -2,7 +2,8 @@ import { type Editor } from '@tiptap/react';
 import { useCallback } from 'react';
 
 interface TipTapEditorSetters {
-  setImage: (event: React.ChangeEvent<HTMLInputElement>, alt: string) => void;
+  setImage: (url: string, alt: string, name: string) => void;
+  setLoadingImage: () => void;
   setLink: (url: string) => void;
   setYoutubeVideo: (src: string) => void;
   setTweet: (tweetId: string) => void;
@@ -15,32 +16,33 @@ export const useTipTapEditorSetters = (
   editor: Editor | null,
 ): TipTapEditorSetters => {
   const setImage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, alt: string) => {
+    (url: string, alt: string, name: string) => {
       if (!editor) return;
-
-      const file = event.target.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          editor
-            .chain()
-            .focus()
-            .setImage({
-              src: reader.result as string,
-              alt,
-            })
-            .run();
-        }
-      };
-      reader.onerror = (err) => {
-        console.error(err);
-      };
-      reader.readAsDataURL(file); // Convert image to Base64
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: 'image',
+          attrs: {
+            src: url,
+            alt,
+            'data-name': name,
+          },
+        })
+        .run();
     },
     [editor],
   );
+  const setLoadingImage = useCallback(() => {
+    if (!editor) return;
+    editor
+      .chain()
+      .focus()
+      .insertContent({
+        type: 'loadingImage',
+      })
+      .run();
+  }, [editor]);
 
   const setLink = useCallback(
     (url: string) => {
@@ -141,6 +143,7 @@ export const useTipTapEditorSetters = (
 
   return {
     setImage,
+    setLoadingImage,
     setLink,
     setYoutubeVideo,
     setTweet,

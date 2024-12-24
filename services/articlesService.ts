@@ -156,6 +156,17 @@ const uploadArticleImage = handleAsyncError(
   },
 );
 
+export const uploadImage = handleAsyncError(
+  async (file: File): Promise<{ url: string; name: string }> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const {
+      data: { data },
+    } = await apiClient.post('image/upload', formData);
+    return data;
+  },
+);
+
 const setArticleFeaturedImg = handleAsyncError(
   async (articleId: number, thumbnailId: number) => {
     const {

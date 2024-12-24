@@ -1,7 +1,6 @@
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
-import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 import CharacterCount from '@tiptap/extension-character-count';
@@ -11,6 +10,8 @@ import { TweetExtension } from '@/components/TipTap/extensions/TweetExtension';
 import { FacebookExtension } from '@/components/TipTap/extensions/FacebookExtension';
 import { InstagramExtension } from '@/components/TipTap/extensions/InstagramExtension';
 import { BlockquoteExtension } from '@/components/TipTap/extensions/BlockquoteExtension';
+import { LoadingImageExtension } from '@/components/TipTap/extensions/LoadingImageExtension';
+import { CustomImage } from '@/components/TipTap/extensions/CustomImageExtension';
 
 export const useAppEditorConfig = () => {
   const editorConfig = useRef({
@@ -20,6 +21,8 @@ export const useAppEditorConfig = () => {
       FacebookExtension,
       InstagramExtension,
       BlockquoteExtension,
+      CustomImage,
+      LoadingImageExtension,
       Placeholder.configure({
         placeholder: 'محتوى المقال هنا...',
       }),
@@ -87,7 +90,6 @@ export const useAppEditorConfig = () => {
           }
         },
       }),
-      Image,
     ],
     immediatelyRender: false,
     injectCSS: false,

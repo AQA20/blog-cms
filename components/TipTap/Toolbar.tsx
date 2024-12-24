@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { type Editor } from '@tiptap/react';
 import {
   Bold,
@@ -27,6 +27,8 @@ import { useTipTapEditorSetters } from '@/hooks/useTipTapEditorSetters';
 import { useInputDialog } from '@/hooks/useInputDialog';
 import { InputDialogComponent } from '@/components/InputDialogComponent/InputDialogComponent';
 import { QuoteDialogComponent } from '../QuoteDialogComponent/QuoteDialogCompnent';
+import { useMutation } from '@tanstack/react-query';
+import { uploadImage } from '@/services/articlesService';
 
 type Props = {
   editor: Editor | null;
@@ -39,6 +41,7 @@ export const Toolbar = ({ editor }: Props) => {
   const [openQuoteDialog, setOpenQuoteDialog] = useState(false);
   const {
     setImage,
+    setLoadingImage,
     setLink,
     setYoutubeVideo,
     setTweet,
@@ -47,6 +50,31 @@ export const Toolbar = ({ editor }: Props) => {
     setQuote,
   } = useTipTapEditorSetters(editor);
   const { input, setInput, dialog, setDialog, handler } = useInputDialog();
+
+  const { mutateAsync, isPending } = useMutation<
+    { url: string; name: string } | undefined,
+    Error,
+    File | undefined
+  >({
+    mutationFn: async (file: File | undefined) => {
+      if (!file) return;
+      const response = await uploadImage(file);
+      return response;
+    },
+    onSuccess: (data: { url: string; name: string } | undefined) => {
+      if (!data) return;
+      setImage(data.url, input.value, data.name);
+    },
+    onError: (error) => {
+      console.error('Error logging in:', error.message);
+    },
+  });
+
+  useEffect(() => {
+    if (isPending) {
+      setLoadingImage();
+    }
+  }, [isPending]);
 
   const openLinkPicker = () => {
     handler({
@@ -132,7 +160,7 @@ export const Toolbar = ({ editor }: Props) => {
         accept="image/*"
         className="hidden"
         ref={imageInputRef}
-        onChange={(e) => setImage(e, input.value)}
+        onChange={(e) => mutateAsync(e.target.files?.[0])}
       />
       <InputDialogComponent
         input={input}

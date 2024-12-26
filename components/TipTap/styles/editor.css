@@ -16,7 +16,7 @@
   }
 
   img {
-    @apply my-4 h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
+    @apply my-5 h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
   }
 
   .tweet-container img {

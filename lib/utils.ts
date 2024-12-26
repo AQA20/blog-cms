@@ -58,3 +58,31 @@ export const stripHTMLTags = (html: string) => {
   const doc = parser.parseFromString(html, 'text/html');
   return doc.body.textContent || ''; // Extract only text content without tags
 };
+
+// Helper function to extract image elements from HTML
+export const extractImageElements = (html: string): string[] => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const imgElements = Array.from(doc.getElementsByTagName('img'));
+  return imgElements.map((img) => img.outerHTML);
+};
+
+export const extractImgUrlFromHtml = (html: string): string[] => {
+  return Array.from(
+    // Extract image URLs from the new content.
+    // <img: Matches the literal string <img, indicating the start of an image tag.
+    // [^>]+: A character class [^>] that matches any character except >. The + quantifier means one or more occurrences. This part matches any attributes within the <img> tag that are not the closing angle bracket.
+    // src=": Matches the literal string src=", which is the start of the image source attribute.
+    // ([^">]+): A capturing group (...) that matches one or more + characters that are not " or >. This captures the URL of the image.
+    // ": Matches the closing double quote of the src attribute.
+    // /g: The global flag g indicates that the search should find all matches in the string, not just the first one.
+    html.matchAll(/<img[^>]+src="([^">]+)"/g), // Returns iterable object
+    (m) => m[1], // A mapping function to access the first capturing group
+  );
+};
+
+export const extractFilenameFromCloudFrontUrl = (url: string): string => {
+  const regex = /cloudfront.net\/(.+)\?/;
+  const match = url.match(regex);
+  return match ? match[1] : '';
+};

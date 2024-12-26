@@ -31,7 +31,7 @@ import { useMutation } from '@tanstack/react-query';
 import { uploadImage } from '@/services/articlesService';
 
 type Props = {
-  editor: Editor | null;
+  editor: Editor;
 };
 
 const toggleStyle = 'rounded-full';
@@ -151,7 +151,6 @@ export const Toolbar = ({ editor }: Props) => {
     setOpenQuoteDialog(false);
   };
 
-  if (!editor) return null;
   return (
     <div>
       {/* Hidden file input */}

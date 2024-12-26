@@ -248,3 +248,7 @@ export const updateArticle = handleAsyncError(
     return article;
   },
 );
+
+export const deleteImage = handleAsyncError(async (name: string) => {
+  await apiClient.delete(`/image/permanent-delete/${name}?type=Article`);
+});

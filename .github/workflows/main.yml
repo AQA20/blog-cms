@@ -23,7 +23,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: ${{ github.ref_name }}
-          fetch-depth: 1 # Shallow clone for better performance
 
       - name: Cache npm dependencies
         id: cache_node_modules

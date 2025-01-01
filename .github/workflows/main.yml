@@ -31,7 +31,7 @@ jobs:
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('${{ github.ref_name }}/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-admin-${{ env.CACHE_KEY }}
 

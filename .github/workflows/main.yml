@@ -14,7 +14,7 @@ jobs:
       - name: Set Environment Variables
         id: set-env
         run: |
-          if [ "${{ github.ref_name  }}" == "test" ]; then
+          if [ "${{ github.ref_name }}" == "test" ]; then
             echo "CACHE_KEY=testing" >> $GITHUB_ENV
           else
             echo "CACHE_KEY=production" >> $GITHUB_ENV
@@ -29,15 +29,13 @@ jobs:
         id: cache_node_modules
         uses: actions/cache@v4
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('${{ github.ref_name }}/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-admin-${{ env.CACHE_KEY }}
 
       - name: Install npm dependencies
-        run: |
-          npm ci --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
 
   tests:
     runs-on: self-hosted
@@ -47,100 +45,60 @@ jobs:
         working-directory: ${{ github.ref_name }}
     steps:
       - name: Run Linting
-        run: |
-          npm run lint
+        run: npm run lint
 
-      - name: Run Tests on Production
-        if: ${{ github.ref_name  == 'main' }}
-        run: |
-          npm run test
+      - name: Run Tests
+        run: npm run test
         env:
-          NEXT_PUBLIC_NEXT_ENV: "production"
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL }}
-          PORT: ${{ secrets.PORT }}
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          PM2_NAME: ${{ secrets.PM2_NAME }}
-
-      - name: Run Tests on Test Environment
-        if: ${{ github.ref_name == 'test' }}
-        run: |
-          npm run test
-        env:
-          NEXT_PUBLIC_NEXT_ENV: "testing"
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
-          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
-          PORT: ${{ secrets.PORT_TEST }}
-          EMAIL: ${{ secrets.EMAIL_TEST }}
-          PASSWORD: ${{ secrets.PASSWORD_TEST }}
-          PM2_NAME: ${{ secrets.PM2_NAME_TEST }}
+          NEXT_PUBLIC_NEXT_ENV: ${{ github.ref_name == 'main' && 'production' || 'testing' }}
+          NEXT_PUBLIC_API_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_API_URL || secrets.NEXT_PUBLIC_API_URL_TEST }}
+          NEXT_PUBLIC_WEB_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_WEB_URL || secrets.NEXT_PUBLIC_WEB_URL_TEST }}
+          PORT: ${{ github.ref_name == 'main' && secrets.PORT || secrets.PORT_TEST }}
+          EMAIL: ${{ github.ref_name == 'main' && secrets.EMAIL || secrets.EMAIL_TEST }}
+          PASSWORD: ${{ github.ref_name == 'main' && secrets.PASSWORD || secrets.PASSWORD_TEST }}
+          PM2_NAME: ${{ github.ref_name == 'main' && secrets.PM2_NAME || secrets.PM2_NAME_TEST }}
 
   build:
     runs-on: self-hosted
-    needs: tests # Ensure tests pass before building
+    needs: tests
     defaults:
       run:
         working-directory: ${{ github.ref_name }}
-
     steps:
-      - name: Build Admin Application to Production
-        if: ${{ github.ref_name == 'main' }}
+      - name: Build Application
         run: |
           rm -rf .next  # Clean up previous build artifacts
-          npm run build  # Build the admin application
-          pm2 restart "${{ secrets.PM2_NAME }}" || pm2 start pm2.config.cjs
+          npm run build  # Build the application
+          pm2 restart "${{ github.ref_name == 'main' && secrets.PM2_NAME || secrets.PM2_NAME_TEST }}" || pm2 start pm2.config.cjs
           pm2 save
         env:
-          NEXT_PUBLIC_NODE_ENV: "production"
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL }}
-          PORT: ${{ secrets.PORT }}
-          PM2_NAME: ${{ secrets.PM2_NAME }}
-
-      - name: Build Admin Application to Test Environment
-        if: ${{ github.ref_name == 'test' }}
-        run: |
-          rm -rf .next  # Clean up previous build artifacts
-          npm run build  # Build the admin application
-          pm2 restart "${{ secrets.PM2_NAME_TEST }}" || pm2 start pm2.config.cjs
-          pm2 save
-        env:
-          NEXT_PUBLIC_NODE_ENV: "testing"
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
-          NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
-          PORT: ${{ secrets.PORT_TEST }}
-          PM2_NAME: ${{ secrets.PM2_NAME_TEST }}
+          NEXT_PUBLIC_NODE_ENV: ${{ github.ref_name == 'main' && 'production' || 'testing' }}
+          NEXT_PUBLIC_API_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_API_URL || secrets.NEXT_PUBLIC_API_URL_TEST }}
+          NEXT_PUBLIC_WEB_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_WEB_URL || secrets.NEXT_PUBLIC_WEB_URL_TEST }}
+          PORT: ${{ github.ref_name == 'main' && secrets.PORT || secrets.PORT_TEST }}
+          PM2_NAME: ${{ github.ref_name == 'main' && secrets.PM2_NAME || secrets.PM2_NAME_TEST }}
 
   deploy:
     runs-on: self-hosted
-    needs: build # Ensure the app is built before deploying
+    needs: build
     steps:
-      - name: Deploy Admin Build to Production
-        if: ${{ github.ref_name == 'main' }}
+      - name: Deploy Application
         run: |
-          # Build the admin application in a temporary directory to minimize downtime
-          sudo mkdir -p /var/www/admin_temp
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/main/.next  /var/www/admin_temp/
-          sudo rm -rf /var/www/admin/.next
-          # Replace the old version with the new version
-          sudo mv /var/www/admin_temp/.next /var/www/admin/.next
-          # Remove temp directory
-          sudo rm -rf /var/www/admin_temp
+          if [ "${{ github.ref_name }}" == "main" ]; then
+            TEMP_DIR="/var/www/admin_temp"
+            DEPLOY_DIR="/var/www/admin"
+          else
+            TEMP_DIR="/var/www/manage_temp"
+            DEPLOY_DIR="/var/www/manage"
+          fi
 
-      - name: Deploy Admin Build to Test Environment
-        if: ${{ github.ref_name == 'test' }}
-        run: |
-          # Build the admin application in a temporary directory to minimize downtime
-          sudo mkdir -p /var/www/manage_temp
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/test/.next /var/www/manage_temp/
-          sudo rm -rf /var/www/manage/.next
-          # Replace the old version with the new version
-          sudo mv /var/www/manage_temp/.next /var/www/manage/.next
-          # Remove temp directory
-          sudo rm -rf /var/www/manage_temp
+          sudo mkdir -p $TEMP_DIR
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next $TEMP_DIR/
+          sudo rm -rf $DEPLOY_DIR/.next
+          sudo mv $TEMP_DIR/.next $DEPLOY_DIR/.next
+          sudo rm -rf $TEMP_DIR
 
       - name: Restart Nginx Service
         run: |
-          sudo systemctl reload nginx
-          sudo systemctl restart nginx
+          sudo systemctl reload nginx || true
+          sudo systemctl restart nginx || true

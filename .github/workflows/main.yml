@@ -122,11 +122,13 @@ jobs:
       - name: Deploy Admin Build to Production
         if: ${{ github.ref_name == 'main' }}
         run: |
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name  }}/.next /var/www/admin/
+          sudo mv ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next /var/www/admin/.next
+
       - name: Deploy Admin Build to Test Environment
         if: ${{ github.ref_name == 'test' }}
         run: |
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name  }}/.next /var/www/manage/
+          sudo mv ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next /var/www/manage/.next
+
       - name: Restart Nginx Service
         run: |
           sudo systemctl reload nginx

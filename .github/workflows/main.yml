@@ -37,7 +37,7 @@ jobs:
 
       - name: Install npm dependencies
         run: |
-          npm ci --legacy-peer-deps       
+          npm ci --legacy-peer-deps
 
   tests:
     runs-on: self-hosted
@@ -49,14 +49,13 @@ jobs:
       - name: Run Linting
         run: |
           npm run lint
-        
 
       - name: Run Tests on Production
         if: ${{ github.ref_name  == 'main' }}
         run: |
           npm run test
         env:
-          NEXT_PUBLIC_NEXT_ENV: 'production'
+          NEXT_PUBLIC_NEXT_ENV: "production"
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL }}
           PORT: ${{ secrets.PORT }}
@@ -69,7 +68,7 @@ jobs:
         run: |
           npm run test
         env:
-          NEXT_PUBLIC_NEXT_ENV: 'testing'
+          NEXT_PUBLIC_NEXT_ENV: "testing"
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
           PORT: ${{ secrets.PORT_TEST }}
@@ -93,7 +92,7 @@ jobs:
           pm2 restart "${{ secrets.PM2_NAME }}" || pm2 start pm2.config.cjs
           pm2 save
         env:
-          NEXT_PUBLIC_NODE_ENV: 'production'
+          NEXT_PUBLIC_NODE_ENV: "production"
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL }}
           PORT: ${{ secrets.PORT }}
@@ -107,7 +106,7 @@ jobs:
           pm2 restart "${{ secrets.PM2_NAME_TEST }}" || pm2 start pm2.config.cjs
           pm2 save
         env:
-          NEXT_PUBLIC_NODE_ENV: 'testing'
+          NEXT_PUBLIC_NODE_ENV: "testing"
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_TEST }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.NEXT_PUBLIC_WEB_URL_TEST }}
           PORT: ${{ secrets.PORT_TEST }}
@@ -140,7 +139,7 @@ jobs:
           sudo mv /var/www/manage_temp/.next /var/www/manage/.next
           # Remove temp directory
           sudo rm -rf /var/www/manage_temp
-          
+
       - name: Restart Nginx Service
         run: |
           sudo systemctl reload nginx

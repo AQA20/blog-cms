@@ -121,7 +121,7 @@ jobs:
         run: |
           # Build the admin application in a temporary directory to minimize downtime
           sudo mkdir -p /var/www/admin_temp
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next  /var/www/admin_temp/
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/main/.next  /var/www/admin_temp/
           sudo rm -rf /var/www/admin/.next
           # Replace the old version with the new version
           sudo mv /var/www/admin_temp/.next /var/www/admin/.next
@@ -133,7 +133,7 @@ jobs:
         run: |
           # Build the admin application in a temporary directory to minimize downtime
           sudo mkdir -p /var/www/manage_temp
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next /var/www/manage_temp/
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/test/.next /var/www/manage_temp/
           sudo rm -rf /var/www/manage/.next
           # Replace the old version with the new version
           sudo mv /var/www/manage_temp/.next /var/www/manage/.next

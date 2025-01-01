@@ -29,18 +29,17 @@ jobs:
         id: cache_node_modules
         uses: actions/cache@v4
         with:
+          run: cd ${{ github.ref_name }}
           path: |
             node_modules
           key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-admin-${{ env.CACHE_KEY }}
-          working-directory: ${{ github.ref_name }}
 
       - name: Install npm dependencies
         run: |
           npm ci --legacy-peer-deps
         if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        working-directory: ${{ github.ref_name }}
         
 
   tests:
@@ -122,13 +121,15 @@ jobs:
       - name: Deploy Admin Build to Production
         if: ${{ github.ref_name == 'main' }}
         run: |
-          sudo mv ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next /var/www/admin/.next
+          sudo rm -rf /var/www/admin/.next
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next /var/www/admin/
 
       - name: Deploy Admin Build to Test Environment
         if: ${{ github.ref_name == 'test' }}
         run: |
-          sudo mv ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next /var/www/manage/.next
-
+          sudo rm -rf /var/www/manage/.next
+          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next /var/www/manage/
+          
       - name: Restart Nginx Service
         run: |
           sudo systemctl reload nginx

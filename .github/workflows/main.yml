@@ -7,6 +7,8 @@ on:
 jobs:
   install_dependencies:
     runs-on: self-hosted
+    outputs:
+      node_modules: ${{ steps.cache_node_modules.outputs.cache-hit }}
     defaults:
       run:
         working-directory: ${{ github.ref_name }}
@@ -36,6 +38,7 @@ jobs:
 
       - name: Install npm dependencies
         run: npm ci --legacy-peer-deps
+        if: steps.cache_node_modules.outputs.cache-hit != 'true'
 
   tests:
     runs-on: self-hosted

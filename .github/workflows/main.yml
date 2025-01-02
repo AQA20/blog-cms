@@ -22,8 +22,10 @@ jobs:
             echo "CACHE_KEY=production" >> $GITHUB_ENV
           fi
 
-      - name: Ensure Branch Directory Exists
-        run: mkdir -p ${{ github.ref_name }}
+      - name: Create and Navigate to Branch Directory
+        run: |
+          mkdir -p ${{ github.ref_name }}
+          cd ${{ github.ref_name }}
 
       - name: Checkout Code
         uses: actions/checkout@v4

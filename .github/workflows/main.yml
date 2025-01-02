@@ -34,8 +34,10 @@ jobs:
             ${{ runner.os }}-admin-${{ env.CACHE_KEY }}
 
       - name: Install npm dependencies
+        if: steps.cache_node_modules.outputs.cache-hit != 'true'
         run: |
           npm ci --legacy-peer-deps
+        
 
   tests:
     runs-on: self-hosted

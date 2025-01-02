@@ -41,9 +41,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.ref_name }}/node_modules
-          key: ${{ runner.os }}-admin-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-admin-
+            ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-
 
       - name: Install npm dependencies
         run: npm ci --legacy-peer-deps

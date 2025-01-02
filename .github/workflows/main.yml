@@ -33,17 +33,23 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          path: ${{ github.ref_name }}
+
+      - name: Debug hashFiles
+        run:  |
+          pwd
+          echo ${{ hashFiles('${{ github.workspace }}/${{ github.ref_name }}/package-lock.json') }}
+          echo ${{ '${{ github.workspace }}/${{ github.ref_name }}/package-lock.json' }}
+          echo ${{ '${{ github.ref_name }}/package-lock.json' }}
+          echo ${{ github.workspace }}
 
       - name: Cache npm dependencies
         id: cache_node_modules
         uses: actions/cache@v4
         with:
           path: ${{ github.ref_name }}/node_modules
-          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('${{ github.workspace }}/${{ github.ref_name }}/package-lock.json') }}
+          key: ${{ runner.os }}-admin-${{ hashFiles('${{ github.workspace }}/${{ github.ref_name }}/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-
+            ${{ runner.os }}-admin-
 
       - name: Install npm dependencies
         run: npm ci --legacy-peer-deps

@@ -5,8 +5,17 @@ on:
     branches: [main, test]
 
 jobs:
+  create_branch_directory:
+    runs-on: self-hosted
+    steps:
+      - name: Create and Navigate to Branch Directory
+        run: |
+          mkdir -p ${{ github.ref_name }}
+          cd ${{ github.ref_name }}
+
   install_dependencies:
     runs-on: self-hosted
+    needs: create_branch_directory
     outputs:
       node_modules: ${{ steps.cache_node_modules.outputs.cache-hit }}
     defaults:
@@ -21,11 +30,6 @@ jobs:
           else
             echo "CACHE_KEY=production" >> $GITHUB_ENV
           fi
-
-      - name: Create and Navigate to Branch Directory
-        run: |
-          mkdir -p ${{ github.ref_name }}
-          cd ${{ github.ref_name }}
 
       - name: Checkout Code
         uses: actions/checkout@v4

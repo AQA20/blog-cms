@@ -23,13 +23,9 @@ jobs:
         working-directory: ${{ github.ref_name }}
     steps:
       - name: Set Environment Variables
-        id: set-env
         run: |
-          if [ "${{ github.ref_name }}" == "test" ]; then
-            echo "CACHE_KEY=testing" >> $GITHUB_ENV
-          else
-            echo "CACHE_KEY=production" >> $GITHUB_ENV
-          fi
+          echo "CACHE_KEY=${{ github.ref_name == 'main' && 'production' || 'testing' }}" >> $GITHUB_ENV
+          echo "PACKAGE_LOCK_PATH=${{ github.ref_name}}/package-lock.json" >> $GITHUB_ENV
 
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -45,7 +41,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.ref_name }}/node_modules
-          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles(env.PACKAGE_LOCK_PATH) }}
           restore-keys: |
             ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-
 

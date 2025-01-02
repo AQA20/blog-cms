@@ -41,7 +41,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.ref_name }}/node_modules
-          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles(github.ref_name + '/package-lock.json') }}
+          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('${{ github.workspace }}/${{ github.ref_name }}/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-
 

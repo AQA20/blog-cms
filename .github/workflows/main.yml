@@ -37,9 +37,9 @@ jobs:
       - name: Debug hashFiles
         run:  |
           pwd
-          echo ${{ hashFiles('${{ github.workspace }}/${{ github.ref_name }}/package-lock.json') }}
-          echo ${{ '${{ github.workspace }}/${{ github.ref_name }}/package-lock.json' }}
-          echo ${{ '${{ github.ref_name }}/package-lock.json' }}
+          echo ${{ hashFiles("${{ github.workspace }}/${{ github.ref_name }}/package-lock.json") }}
+          echo ${{ "${{ github.workspace }}/${{ github.ref_name }}/package-lock.json" }}
+          echo ${{ "${{ github.ref_name }}/package-lock.json" }}
           echo ${{ github.workspace }}
 
       - name: Cache npm dependencies

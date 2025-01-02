@@ -22,6 +22,9 @@ jobs:
             echo "CACHE_KEY=production" >> $GITHUB_ENV
           fi
 
+      - name: Ensure Branch Directory Exists
+        run: mkdir -p ${{ github.ref_name }}
+
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
@@ -31,10 +34,10 @@ jobs:
         id: cache_node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: ${{ github.ref_name }}/node_modules
           key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('${{ github.ref_name }}/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-admin-${{ env.CACHE_KEY }}
+            ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-
 
       - name: Install npm dependencies
         run: npm ci --legacy-peer-deps

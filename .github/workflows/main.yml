@@ -27,7 +27,6 @@ jobs:
           echo "PACKAGE_LOCK_PATH=${{ github.ref_name}}/package-lock.json" >> $GITHUB_ENV
 
       - name: Checkout Code
-        id: cache_node_modules
         uses: actions/checkout@v4
         with:
           path: ${{ github.ref_name }}

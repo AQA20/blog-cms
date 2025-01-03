@@ -11,7 +11,6 @@ jobs:
       - name: Create and Navigate to Branch Directory
         run: |
           mkdir -p ${{ github.ref_name }}
-          cd ${{ github.ref_name }}
 
   install_dependencies:
     runs-on: self-hosted
@@ -28,6 +27,7 @@ jobs:
           echo "PACKAGE_LOCK_PATH=${{ github.ref_name}}/package-lock.json" >> $GITHUB_ENV
 
       - name: Checkout Code
+        id: cache_node_modules
         uses: actions/checkout@v4
         with:
           path: ${{ github.ref_name }}
@@ -93,12 +93,14 @@ jobs:
       - name: Deploy Application
         run: |
           if [ "${{ github.ref_name }}" == "main" ]; then
+            sudo mkdir -p /var/www/admin
             DEPLOY_DIR="/var/www/admin"
           else
+           sudo mkdir -p /var/www/manage
             DEPLOY_DIR="/var/www/manage"
           fi
 
-          sudo cp -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next $DEPLOY_DIR/
+          sudo mv -r ~/actions-runner-admin/_work/500kalima-cms/500kalima-cms/${{ github.ref_name }}/.next $DEPLOY_DIR/
 
       - name: Restart Nginx Service
         run: |

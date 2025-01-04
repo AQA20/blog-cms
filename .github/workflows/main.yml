@@ -89,7 +89,7 @@ jobs:
       - name: Build Application
         run: |
           # Clean up previous build outputs but keep the cache
-          find .next -type f -not -path '*/cache/*' -delete
+          [ -d ".next" ] && find .next -type f -not -path '*/cache/*' -delete
           npm run build  # Build the application
           pm2 restart "${{ github.ref_name == 'main' && secrets.PM2_NAME || secrets.PM2_NAME_TEST }}" || pm2 start pm2.config.cjs
           pm2 save

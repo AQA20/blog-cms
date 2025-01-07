@@ -1,9 +1,9 @@
-# 500kalima CMS Dashboard
+# Blog CMS
 
-This project is a CMS dashboard for `500kalima.com`, built using `Next.js` and `TypeScript`. The dashboard is currently only accessibly by admins, but you can access the test dashboard ([manage.500kalima.com](https://manage.500kalima.com)) where you can test it on a dummy blog ([test.500kalima.com](https://test.500kalima.com)).
+This project is a Blog CMS dashboard. built using `Next.js` and `TypeScript`. The dashboard is currently only accessibly by admins, but you can access the test dashboard at ([manage.500kalima.com](https://manage.500kalima.com)) where you can test it on a dummy blog ([test.500kalima.com](https://test.500kalima.com)).
 
-Test Email: `test@500kalima.com`
-Test password: `Qzbs2+Clw%fK4p6`
+Email: `test@500kalima.com`
+Password: `Qzbs2+Clw%fK4p6`
 
 ---
 
@@ -11,8 +11,8 @@ Test password: `Qzbs2+Clw%fK4p6`
 
 Before you start using the CMS dashboard, ensure the following:
 
-1. **500kalima API server** must be up and running. This is crucial for the CMS to function correctly.
-2. Clone and set up the API server by following the instructions in the [500kalima API repository](https://github.com/AQA20/500kalima).
+1. **Blog API server** must be up and running. This is crucial for the CMS to function correctly.
+2. Clone and set up the API server by following the instructions in the [Blog API repository](https://github.com/AQA20/blog-api).
 
 ---
 
@@ -21,8 +21,8 @@ Before you start using the CMS dashboard, ensure the following:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/AQA20/500kalima-cms.git
-cd 500kalima-cms
+git clone https://github.com/AQA20/blog-cms.git
+cd blog-cms
 ```
 
 ### 2. Install dependencies

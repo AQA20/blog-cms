@@ -1,0 +1,68 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "react-hooks",
+    "@typescript-eslint",
+    "import",
+    "unused-imports",
+    "prettier"
+  ],
+  "rules": {
+    // TypeScript
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/consistent-type-assertions": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "@typescript-eslint/no-empty-interface": "warn",
+
+    // React
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react/jsx-props-no-spreading": "warn",
+    "react/prop-types": "off", // TypeScript already checks prop types
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+
+    // General code quality
+    "no-console": "warn",
+    "no-debugger": "warn",
+
+    // Import and unused imports
+    "import/no-unresolved": "error",
+    "import/named": "error",
+    "import/default": "error",
+    "import/no-duplicates": "warn",
+    "unused-imports/no-unused-imports": "warn",
+
+    // Formatting
+    "prettier/prettier": "warn",
+
+    // Other rules
+    "no-empty-function": "warn",
+    "no-magic-numbers": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["components/ui/*", "src/components/ui/*"],
+      "rules": {
+        "prettier/prettier": "off",
+        "react/prop-types": "off",
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-empty-object-type": "off",
+        "import/named": "off",
+        "react/jsx-props-no-spreading": "off"
+      }
+    }
+  ]
+}

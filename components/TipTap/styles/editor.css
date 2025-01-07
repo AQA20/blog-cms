@@ -1,0 +1,81 @@
+.tiptap {
+  /* Ensure the editor container doesn't clip the cursor */
+  overflow: hidden; /* Prevent container overflow */
+  position: relative; /* Allow for child positioning */
+
+  ul {
+    @apply list-disc space-y-2 pr-5;
+  }
+
+  ol {
+    @apply list-decimal space-y-2 pr-5;
+  }
+
+  a {
+    color: skyblue;
+  }
+
+  img {
+    @apply my-5 h-[229px] w-full max-w-[100%] rounded-[8px] md:h-[510px] md:w-[680px];
+  }
+
+  .tweet-container img {
+    @apply my-0 h-full w-full;
+  }
+  .fb-post iframe {
+    @apply my-0 rounded-[8px];
+  }
+
+  .fb_iframe_widget {
+    @apply my-4;
+  }
+
+  p.is-editor-empty:first-child::before {
+    color: hsl(var(--muted-foreground));
+    content: attr(data-placeholder);
+    float: right;
+    height: 0;
+    pointer-events: none;
+  }
+
+  p.is-empty::before {
+    color: hsl(var(--muted-foreground));
+    content: attr(data-placeholder);
+    float: right;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* Character count */
+  .character-count {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem;
+  }
+
+  /* This selector targets any class that contains "react-tweet-theme"  */
+  [class*='react-tweet-theme'] {
+    @apply max-w-full sm:w-[680px];
+  }
+  /* This selector targets any class that contains "mediaContainer"  */
+  [class*='mediaContainer'] {
+    @apply max-h-[340px] sm:max-h-[510px];
+  }
+
+  [class*='watchOnTwitter'] {
+    @apply hidden;
+  }
+  .fb-post iframe,
+  .fb-video iframe {
+    border-radius: 8px !important;
+  }
+
+  .instagram-media {
+    min-width: auto !important;
+    border-radius: 8px !important;
+  }
+
+  div[data-youtube-video] iframe {
+    @apply my-2 max-h-[240px] max-w-full rounded-[8px] sm:min-h-[510px] sm:w-[680px];
+  }
+}

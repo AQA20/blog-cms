@@ -1,0 +1,5 @@
+.tweetContainer {
+  .react-tweet-theme {
+    @apply w-[680px];
+  }
+}

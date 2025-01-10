@@ -24,7 +24,6 @@ jobs:
       - name: Set Environment Variables
         run: |
           echo "CACHE_KEY=${{ github.ref_name == 'main' && 'production' || 'testing' }}" >> $GITHUB_ENV
-          echo "PACKAGE_LOCK_PATH=${{ github.ref_name}}/package-lock.json" >> $GITHUB_ENV
 
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -80,9 +79,9 @@ jobs:
             ~/.npm
             ${{ github.workspace }}/${{ github.ref_name }}/.next/cache
           # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-${{ github.ref_name }}-nextjs-${{ hashFiles('**/package.json', '**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ github.ref_name }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
-          restore-keys: ${{ runner.os }}-${{ github.ref_name }}-nextjs-
+          restore-keys: ${{ runner.os }}-${{ github.ref_name }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
                   
       - name: Build Application
         run: |

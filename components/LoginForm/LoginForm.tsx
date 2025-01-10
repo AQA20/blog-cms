@@ -65,12 +65,7 @@ export function LoginForm() {
     mutation.mutate(values);
   }
 
-  useEffect(() => {
-     if (process.env.NEXT_PUBLIC_NEXT_ENV === 'testing') {
-      form.setValue('email', 'test@500kalima.com')
-      form.setValue('password', 'Qzbs2+Clw%fK4p6')
-     }
-  }, []);
+
 
   return (
     <Form {...form}>

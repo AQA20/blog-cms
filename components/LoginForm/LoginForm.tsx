@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
@@ -30,7 +30,6 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-
   // Use the typed dispatch hook
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -64,6 +63,13 @@ export function LoginForm() {
     // ✅ This will be type-safe and validated.
     mutation.mutate(values);
   }
+
+  useEffect(() => {
+     if (process.env.NEXT_PUBLIC_NEXT_ENV === 'testing') {
+      form.setValue('email', 'test@500kalima.com')
+      form.setValue('password', 'Qzbs2+Clw%fK4p6')
+     }
+  }, []);
 
   return (
     <Form {...form}>

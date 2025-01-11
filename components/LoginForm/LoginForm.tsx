@@ -66,13 +66,13 @@ export function LoginForm() {
   }
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setHostname(window.location.hostname);
-    }
+    setHostname(window.location.host);
   }, []);
 
   useEffect(() => {
+    console.log('hostname', hostname)
     if (!hostname) return;
+    console.log(hostname)
     if (hostname === 'manage.500kalima.com') {
       form?.setValue('email', 'test@500kalima.com');
       form?.setValue('password', 'Qzbs2+Clw%fK4p6');

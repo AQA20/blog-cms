@@ -70,11 +70,12 @@ export function LoginForm() {
   }, []);
 
   useEffect(() => {
+    if (!hostname) return;
     if (hostname === 'manage.500kalima.com') {
-      form.setValue('email', 'test@500kalima.com');
-      form.setValue('password', 'Qzbs2+Clw%fK4p6');
+      form?.setValue('email', 'test@500kalima.com');
+      form?.setValue('password', 'Qzbs2+Clw%fK4p6');
     }
-  }, [hostname]);
+  }, [hostname, form]);
 
   return (
     <Form {...form}>

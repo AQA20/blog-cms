@@ -66,7 +66,9 @@ export function LoginForm() {
   }
 
   useEffect(() => {
-    setHostname(window.location.host);
+    if (typeof window !== 'undefined') {
+      setHostname(window.location.hostname);
+    }
   }, []);
 
   useEffect(() => {

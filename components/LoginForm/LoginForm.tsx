@@ -30,7 +30,6 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [hostname, setHostname] = useState("");
   // Use the typed dispatch hook
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -66,18 +65,11 @@ export function LoginForm() {
   }
 
   useEffect(() => {
-    setHostname(window.location.host);
-  }, []);
-
-  useEffect(() => {
-    console.log('hostname', hostname)
-    if (!hostname) return;
-    console.log(hostname)
-    if (hostname === 'manage.500kalima.com') {
+    if (process.env.NEXT_ENV === 'testing') {
       form?.setValue('email', 'test@500kalima.com');
       form?.setValue('password', 'Qzbs2+Clw%fK4p6');
     }
-  }, [hostname, form]);
+  }, [form]);
 
   return (
     <Form {...form}>

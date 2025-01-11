@@ -66,7 +66,7 @@ export function LoginForm() {
   }
 
   useEffect(() => {
-    setHostname(window.location.hostname);
+    setHostname(window.location.host);
   }, []);
 
   useEffect(() => {

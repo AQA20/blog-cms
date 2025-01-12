@@ -3,7 +3,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   env: {
     API_URL: process.env.NEXT_PUBLIC_API_URL,
-    NEXT_ENVIRONMENT: process.env.NEXT_PUBLIC_NEXT_ENV,
+    NEXT_ENVIRONMENT: process.env.NEXT_PUBLIC_NEXT_ENVIRONMENT,
     WEB_URL: process.env.NEXT_PUBLIC_WEB_URL,
   },
   images: {

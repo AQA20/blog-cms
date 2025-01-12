@@ -51,7 +51,7 @@ jobs:
       - name: Run Tests
         run: npm run test
         env:
-          NEXT_PUBLIC_NEXT_ENV: ${{ github.ref_name == 'main' && 'production' || 'testing' }}
+          NEXT_PUBLIC_NEXT_ENVIRONMENT: ${{ github.ref_name == 'main' && 'production' || 'testing' }}
           NEXT_PUBLIC_API_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_API_URL || secrets.NEXT_PUBLIC_API_URL_TEST }}
           NEXT_PUBLIC_WEB_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_WEB_URL || secrets.NEXT_PUBLIC_WEB_URL_TEST }}
           PORT: ${{ github.ref_name == 'main' && secrets.PORT || secrets.PORT_TEST }}
@@ -87,7 +87,7 @@ jobs:
           pm2 restart pm2.config.cjs
           pm2 save
         env:
-          NEXT_PUBLIC_NODE_ENV: ${{ github.ref_name == 'main' && 'production' || 'testing' }}
+          NEXT_PUBLIC_NEXT_ENVIRONMENT: ${{ github.ref_name == 'main' && 'production' || 'testing' }}
           NEXT_PUBLIC_API_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_API_URL || secrets.NEXT_PUBLIC_API_URL_TEST }}
           NEXT_PUBLIC_WEB_URL: ${{ github.ref_name == 'main' && secrets.NEXT_PUBLIC_WEB_URL || secrets.NEXT_PUBLIC_WEB_URL_TEST }}
           PORT: ${{ github.ref_name == 'main' && secrets.PORT || secrets.PORT_TEST }}

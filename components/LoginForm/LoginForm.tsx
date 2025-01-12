@@ -66,6 +66,7 @@ export function LoginForm() {
   }
 
   useEffect(() => {
+    console.warn('process.env.NEXT_ENVIRONMENT', process.env.NEXT_ENVIRONMENT)
     if (process.env.NEXT_ENVIRONMENT === 'testing') {
       form?.setValue('email', 'test@500kalima.com');
       form?.setValue('password', 'Qzbs2+Clw%fK4p6');

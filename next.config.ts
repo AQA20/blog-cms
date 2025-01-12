@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'abs.twimg.com', pathname: '**' },
     ],
   },
-  reactStrictMode: process.env.NEXT_ENV === 'development',
+  reactStrictMode: process.env.NEXT_ENVIRONMENT === 'development',
 };
 
 export default nextConfig;

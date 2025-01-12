@@ -21,10 +21,6 @@ jobs:
       run:
         working-directory: ${{ github.ref_name }}
     steps:
-      - name: Set Environment Variables
-        run: |
-          echo "CACHE_KEY=${{ github.ref_name == 'main' && 'production' || 'testing' }}" >> $GITHUB_ENV
-
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
@@ -35,8 +31,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.ref_name }}/node_modules
-          key: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-${{ hashFiles('**/package.json', '**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-admin-${{ env.CACHE_KEY }}-
+          key: ${{ runner.os }}-${{ github.ref_name }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: ${{ runner.os }}-${{ github.ref_name }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - name: Install npm dependencies
         run: npm ci --legacy-peer-deps

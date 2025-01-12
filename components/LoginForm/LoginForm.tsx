@@ -60,11 +60,11 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log('process.env.NEXT_ENVIRONMENT', process.env.NEXT_ENVIRONMENT)
     // ✅ This will be type-safe and validated.
     mutation.mutate(values);
   }
 
-  console.log('log from LoginFrom')
   useEffect(() => {
     if (process.env.NEXT_ENVIRONMENT === 'testing') {
       form?.setValue('email', 'test@500kalima.com');

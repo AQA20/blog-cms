@@ -65,19 +65,10 @@ export function LoginForm() {
   }
 
   useEffect(() => {
-    // Get the exact host and log it
-    const currentHost = window.location.host;
-    console.log("Current host:", currentHost);
-    console.log("Host length:", currentHost.length);
-    console.log("Host characters:", [...currentHost].map(c => c.charCodeAt(0)));
-    
-    // Strict comparison
-    if (currentHost.trim() === 'manage.500kalima.com') {
+    if (process.env.NEXT_ENVIRONMENT === 'testing') {
       console.log("Exact match found");
       form?.setValue('email', 'test@500kalima.com');
       form?.setValue('password', 'Qzbs2+Clw%fK4p6');
-    } else {
-      console.log("No match. Expected 'manage.500kalima.com' but got:", currentHost);
     }
   }, [form]);
 

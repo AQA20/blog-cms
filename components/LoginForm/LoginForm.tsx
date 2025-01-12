@@ -64,6 +64,7 @@ export function LoginForm() {
     mutation.mutate(values);
   }
 
+  console.log('log from LoginFrom')
   useEffect(() => {
     if (process.env.NEXT_ENVIRONMENT === 'testing') {
       form?.setValue('email', 'test@500kalima.com');

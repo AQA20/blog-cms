@@ -5,6 +5,7 @@ module.exports = {
       script: 'npm start',
       env: {
         PORT: process.env.PORT || '3003',
+        NEXT_ENVIRONMENT: process.env.NEXT_ENVIRONMENT,
       },
     },
   ],

@@ -66,7 +66,6 @@ export function LoginForm() {
 
   useEffect(() => {
     if (process.env.NEXT_ENVIRONMENT === 'testing') {
-      console.log("Exact match found");
       form?.setValue('email', 'test@500kalima.com');
       form?.setValue('password', 'Qzbs2+Clw%fK4p6');
     }

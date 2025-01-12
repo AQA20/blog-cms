@@ -60,7 +60,6 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log('process.env.NEXT_ENVIRONMENT', process.env.NEXT_ENVIRONMENT)
     // ✅ This will be type-safe and validated.
     mutation.mutate(values);
   }

@@ -237,7 +237,7 @@ export const updateArticle = handleAsyncError(
       title: formData.title,
       description: formData.description,
       categoryId,
-      content: formData.content,
+      content: formData.content.replace(/&amp;/g, '&'),
       thumbnailId: thumbnailIdValue,
       tags: formData.tags,
     };

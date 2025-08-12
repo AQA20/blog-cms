@@ -186,7 +186,7 @@ export const createArticle = handleAsyncError(
       title: formData.title,
       description: formData.description,
       categoryId,
-      content: formData.content,
+      content: formData.content.replace(/&amp;/g, '&'),
     };
     const {
       data: { data: article },

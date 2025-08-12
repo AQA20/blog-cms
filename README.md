@@ -1,6 +1,6 @@
 # Blog CMS
 
-This project is a Blog CMS dashboard. built using `Next.js` and `TypeScript`. The dashboard is currently only accessibly by admins, but you can access the test dashboard at ([manage.500kalima.com](https://manage.500kalima.com)) where you can test it on a dummy blog ([test.500kalima.com](https://test.500kalima.com)).
+This project is a Blog CMS dashboard. built using `Next.js` and `TypeScript`. The dashboard is currently only accessibly by admins, but you can access the test dashboard at ([manage.500kalima.site](https://manage.500kalima.site)) where you can test it on a dummy blog ([test.500kalima.site](https://test.500kalima.site)).
 
 Email: `test@500kalima.com`
 Password: `Qzbs2+Clw%fK4p6`
@@ -60,7 +60,7 @@ environment variables. You'll need to configure the `NEXT_PUBLIC_API_URL` to poi
 Example `.env` file:
 
 ```bash
-NEXT_PUBLIC_API_URL=https://500kalima.com/node-api
+NEXT_PUBLIC_API_URL=https://500kalima.site/node-api
 ```
 
 Make sure to replace the API_URL with your actual API server URL.
@@ -77,7 +77,7 @@ This will start the CMS dashboard on http://localhost:3000 by default.
 
 ### 5. Accessing the CMS Dashboard
 
-To access the CMS dashboard, you will need admin credentials. If you want to test the dashboard on a dummy blog, we will provide login details and a test URL (e.g., test.500kalima.com) shortly.
+To access the CMS dashboard, you will need admin credentials. If you want to test the dashboard on a dummy blog, we will provide login details and a test URL (e.g., test.500kalima.site) shortly.
 
 ---
 

@@ -14,7 +14,7 @@ export const columns: ColumnDef<Article>[] = [
     cell: ({ row }) => (
       <div className="w-full sm:max-w-sm">
         <ArticleCard
-          imgUrl={row.original.featuredImg}
+          imgUrl={`https://d10l53fpfhdeev.cloudfront.net${row.original.featuredImg}`}
           title={row.original.title}
           description={row.original.description}
           itemId={row.original.id}

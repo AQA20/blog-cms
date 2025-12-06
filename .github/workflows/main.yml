@@ -110,7 +110,6 @@ jobs:
           fi
 
           sudo cp -r ~/actions-runner-admin/_work/blog-cms/blog-cms/${{ github.ref_name }}/.next $DEPLOY_DIR/
-          sudo rm -rf ~/actions-runner-admin/_work/blog-cms/blog-cms/${{ github.ref_name }}
 
       - name: Restart Nginx Service
         run: |

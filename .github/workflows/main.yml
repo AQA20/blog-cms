@@ -85,7 +85,7 @@ jobs:
           # Clean up previous build outputs but keep the cache
           [ -d ".next" ] && find .next -type f -not -path '*/cache/*' -delete
           npm run build  # Build the application
-          pm2 restart pm2.config.cjs
+          pm2 restart pm2.config.cjs --node-args="--max-old-space-size=512"
           pm2 save
         env:
           NEXT_PUBLIC_NEXT_ENVIRONMENT: ${{ github.ref_name == 'main' && 'production' || 'testing' }}
